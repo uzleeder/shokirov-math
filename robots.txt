@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /verify.html
+
+# Shaxsiy kabinetlar indekslanmasin
+Disallow: /student.html
+Disallow: /admin.html
+Disallow: /director.html
+Disallow: /login.html
+Disallow: /logo-preview.html
+Disallow: /api/
+
+Sitemap: https://shokirov-academy.vercel.app/sitemap.xml

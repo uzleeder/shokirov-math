@@ -1,0 +1,22 @@
+node_modules/
+.env
+.env.local
+.vercel
+*.log
+
+# Lokal PGlite bazasi (57 MB) — deploy'ga ketmasligi kerak
+.data/
+
+# Kitobdan ajratilgan JSON (qayta yaratish mumkin: node tools/extract-dtm.js)
+tools/out/
+
+# Eski lokal SQLite bazasi (endi ishlatilmaydi)
+server/academy.db
+server/academy.db-shm
+server/academy.db-wal
+
+.vercel
+.env*
+
+# Parollar bor — hech qachon commit qilinmasin
+TOPSHIRISH.md

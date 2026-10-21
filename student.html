@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<title>Mening kabinetim — Shokirov Math Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/app.css?v=38c188e7" />
+</head>
+<body>
+<header class="app-header">
+  <div class="container bar">
+    <a href="index.html" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5 L8 6.5 L13 12 L8 17.5 L17 17.5"/></svg></span><span>Shokirov Math<small>Talaba kabineti</small></span></a>
+    <div class="header-actions">
+      <span class="header-avatar" id="headerAvatar" title="Profil" onclick="switchTab('profile')" style="cursor:pointer;"></span>
+      <span class="badge accepted" id="whoami" style="display:none"></span>
+      <div class="bil-wrap">
+        <button class="icon-btn" id="bilBtn" aria-label="Bildirishnomalar">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span id="bilDot" style="display:none"></span>
+        </button>
+        <div class="bil-panel" id="bilPanel">
+          <div class="hd">
+            <b>Bildirishnomalar</b>
+            <button onclick="bilHammasi()">Hammasini o'qildi</button>
+          </div>
+          <div class="bil-list" id="bilList"><div class="empty">Yuklanmoqda…</div></div>
+        </div>
+      </div>
+      <button class="icon-btn" onclick="toggleTheme()" aria-label="Rejim">
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-sm" onclick="signOut()">Chiqish</button>
+    </div>
+  </div>
+</header>
+
+<main class="container wide page">
+  <div class="page-head">
+    <h1 id="hello">Salom!</h1>
+    <p class="muted">Sizning baholaringiz, o'qituvchi izohlari va vazifalaringiz.</p>
+  </div>
+
+  <div class="shell">
+  <nav class="tabs" aria-label="Bo'limlar">
+    <button class="tab active" data-tab="dash" data-mobil="Bosh" onclick="switchTab('dash')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg> Dashboard</button>
+    <button class="tab" data-tab="courses" data-mobil="Kurslar" onclick="switchTab('courses')"><svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kurslarim</button>
+    <button class="tab" data-tab="rating" onclick="switchTab('rating')"><svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg> Reyting</button>
+    <button class="tab" data-tab="exams" onclick="switchTab('exams')"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Imtihonlar <span id="imDot"></span></button>
+    <button class="tab" data-tab="cal" onclick="switchTab('cal')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg> Jadval</button>
+    <button class="tab" data-tab="attend" onclick="switchTab('attend')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Davomat</button>
+    <button class="tab" data-tab="chat" data-mobil="Savol" onclick="switchTab('chat')"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Savol berish <span id="chatDot"></span></button>
+    <button class="tab" data-tab="cert" onclick="switchTab('cert')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> Sertifikat</button>
+    <button class="tab" data-tab="pay" onclick="switchTab('pay')"><svg class="i" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> To'lovlar</button>
+    <button class="tab" data-tab="grades" onclick="switchTab('grades')"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v2M12 10v7M17 6v11"/></svg> Baholar</button>
+    <button class="tab" data-tab="feedback" onclick="switchTab('feedback')"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Feedback</button>
+    <button class="tab" data-tab="tasks" data-mobil="Vazifa" onclick="switchTab('tasks')"><svg class="i" viewBox="0 0 24 24"><path d="M9 3h6a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M9 13l2 2 4-4"/></svg> Vazifalar <span id="tasksCount"></span></button>
+  </nav>
+
+  <div class="panes">
+
+  <!-- DASHBOARD -->
+  <section id="tab-dash" class="tab-panel active">
+    <div id="dashView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <!-- KURSLARIM -->
+  <section id="tab-courses" class="tab-panel">
+    <div id="coursesView">
+      <div class="empty">Yuklanmoqda…</div>
+    </div>
+  </section>
+
+  <!-- REYTING -->
+  <section id="tab-rating" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:14px;">
+        <div>
+          <div class="section-title">Reyting</div>
+          <p class="muted small">To'g'ri yechilgan mashqlar bo'yicha</p>
+        </div>
+        <select class="select" id="ratingCourse" style="max-width:230px" onchange="loadRating()"></select>
+      </div>
+      <div id="ratingList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <section id="tab-exams" class="tab-panel">
+    <div id="imView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <!-- JADVAL VA KALENDAR -->
+  <section id="tab-cal" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:14px;">Haftalik dars jadvali</div>
+      <div id="sJadval"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <div class="spread" style="margin-bottom:14px;">
+        <div class="section-title">Kalendar</div>
+        <input class="input" type="month" id="sOy" style="max-width:170px" onchange="loadSKal()" />
+      </div>
+      <div id="sKal"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- DAVOMAT -->
+  <section id="tab-attend" class="tab-panel">
+    <div id="attendView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <!-- CHAT -->
+  <section id="tab-chat" class="tab-panel">
+    <div class="chat-box">
+      <div class="chat-head">
+        <span class="logo" style="width:34px;height:34px;border-radius:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5 L8 6.5 L13 12 L8 17.5 L17 17.5"/></svg>
+        </span>
+        <div>
+          <b>Shokirov Manuchehr</b>
+          <div class="small">O'qituvchi · savolingizni bemalol yozing</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs"><div class="chat-empty">Yuklanmoqda…</div></div>
+      <form class="chat-form" onsubmit="return yubor(event)">
+        <textarea id="chatInput" placeholder="Savolingizni yozing… (Enter — yuborish)" rows="1"></textarea>
+        <button class="btn btn-primary" type="submit" id="chatBtn">
+          <svg class="i" viewBox="0 0 24 24"><path d="M22 3L2 11l6 2.5L18 6l-7.5 9 8 3z"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- SERTIFIKAT -->
+  <section id="tab-cert" class="tab-panel">
+    <div id="certView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <!-- TO'LOVLAR -->
+  <section id="tab-pay" class="tab-panel">
+    <div id="payView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <section id="tab-grades" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:14px;">
+        <div class="section-title">Baholarim</div>
+        <div id="avgBox"></div>
+      </div>
+      <div class="stack" id="gradesList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <section id="tab-feedback" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:14px;">O'qituvchi izohlari</div>
+      <div class="stack" id="fbList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <section id="tab-tasks" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:14px;">Vazifalar</div>
+      <div class="stack" id="asList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- PROFIL -->
+  <section id="tab-profile" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:4px;">Profil ma'lumotlarim</div>
+      <p class="muted small" style="margin-bottom:22px;">Rasmingiz, ismingiz va telefon raqamingizni o'zgartirishingiz mumkin.</p>
+
+      <div class="avatar-edit">
+        <div class="avatar-big" id="avatarPreview"></div>
+        <div class="avatar-actions">
+          <input type="file" id="avatarFile" accept="image/*" hidden onchange="pickAvatar(event)" />
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('avatarFile').click()">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v13"/></svg> Rasm tanlash
+          </button>
+          <button class="btn btn-ghost btn-sm" id="avatarDelBtn" onclick="removeAvatar()" style="display:none;">
+            <svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg> O'chirish
+          </button>
+          <p class="muted small" style="margin-top:2px;">JPG yoki PNG · avtomatik kichraytiriladi</p>
+        </div>
+      </div>
+
+      <form onsubmit="return saveProfile(event)" style="margin-top:24px;">
+        <div class="row2">
+          <div class="field"><label>Ism familiya</label><input class="input" id="pf_name" required /></div>
+          <div class="field"><label>Telefon</label><input class="input" id="pf_phone" placeholder="90 123 45 67" /></div>
+        </div>
+        <div class="field"><label>Email (login) — o'zgartirib bo'lmaydi</label><input class="input" id="pf_email" disabled /></div>
+
+        <div class="section-title" style="font-size:16px; margin:22px 0 10px;">Parolni o'zgartirish</div>
+        <div class="row2">
+          <div class="field"><label>Yangi parol</label><input class="input" type="password" id="pf_pass" placeholder="Bo'sh qoldirsangiz — o'zgarmaydi" /></div>
+          <div class="field"><label>Parolni takrorlang</label><input class="input" type="password" id="pf_pass2" placeholder="••••••••" /></div>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="pf_btn" style="margin-top:8px;">Saqlash</button>
+      </form>
+    </div>
+  </section>
+  </div>
+  </div>
+</main>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js?v=38c188e7"></script>
+<script>
+  let ME = null, TASKS = [];
+
+  (async () => {
+    ME = await guard('student');
+    if (!ME) return;
+    bilInit();
+    mobilNavQur();
+    document.getElementById('hello').textContent = 'Salom, ' + (ME.full_name || 'talaba') + '!';
+    const w = document.getElementById('whoami'); w.style.display = ''; w.textContent = 'Talaba';
+    renderProfile();
+    belgiYangila();
+    loadDash();
+    loadAll();
+  })();
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    ['dash','courses','rating','exams','cal','attend','chat','pay','cert','grades','feedback','tasks','profile']
+      .forEach(n => document.getElementById('tab-' + n).classList.toggle('active', n === name));
+    const ha = document.getElementById('headerAvatar');
+    if (ha) ha.classList.toggle('on', name === 'profile');
+    if (name === 'courses' && !COURSES_LOADED) loadCourses();
+    if (name === 'dash') loadDash();
+    if (name === 'rating') initRating();
+    if (name === 'exams') loadExams();
+    if (name === 'cal') loadCal();
+    if (name === 'attend') loadAttend();
+    if (name === 'pay') loadPay();
+    if (name === 'cert') loadCert();
+    if (name === 'chat') loadChat();
+  }
+
+  // ==================== CHAT ====================
+  let CHAT_LAST = 0, CHAT_TIMER = null, CHAT_LOADED = false;
+
+  function vaqt(t) {
+    try { return new Date(t).toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' }); }
+    catch (e) { return ''; }
+  }
+  function kun(t) {
+    const d = new Date(t), b = new Date();
+    const teng = (a, c) => a.toDateString() === c.toDateString();
+    if (teng(d, b)) return 'Bugun';
+    const ken = new Date(b); ken.setDate(b.getDate() - 1);
+    if (teng(d, ken)) return 'Kecha';
+    return fmtDate(t);
+  }
+
+  function msgHTML(m) {
+    const meniki = m.sender_role === 'student';
+    return `<div class="msg ${meniki ? 'me' : 'them'}">${esc(m.body)}<span class="t">${vaqt(m.created_at)}</span></div>`;
+  }
+
+  function qoshMsgs(list, tozala) {
+    const box = document.getElementById('chatMsgs');
+    if (tozala) { box.innerHTML = ''; CHAT_LAST = 0; }
+    if (!list.length && tozala) {
+      box.innerHTML = `<div class="chat-empty">Hali xabar yo'q.<br>
+        <span class="small">Tushunmagan mavzu yoki masalangizni yozing — o'qituvchi javob beradi.</span></div>`;
+      return;
+    }
+    if (list.length && box.querySelector('.chat-empty')) box.innerHTML = '';
+    let oxirgiKun = box.dataset.kun || '';
+    let html = '';
+    for (const m of list) {
+      const k = kun(m.created_at);
+      if (k !== oxirgiKun) { html += `<div class="chat-day">${esc(k)}</div>`; oxirgiKun = k; }
+      html += msgHTML(m);
+      CHAT_LAST = Math.max(CHAT_LAST, m.id);
+    }
+    box.dataset.kun = oxirgiKun;
+    box.insertAdjacentHTML('beforeend', html);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  async function loadChat() {
+    if (!CHAT_LOADED) {
+      CHAT_LOADED = true;
+      try { qoshMsgs(await api.get('/api/messages'), true); }
+      catch (e) { document.getElementById('chatMsgs').innerHTML = `<div class="chat-empty">Xato: ${esc(e.message)}</div>`; return; }
+      belgiYangila();
+    }
+    if (CHAT_TIMER) clearInterval(CHAT_TIMER);
+    CHAT_TIMER = setInterval(chatYangi, 8000);   // yangi xabarlarni kuzatish
+  }
+
+  async function chatYangi() {
+    if (!document.getElementById('tab-chat').classList.contains('active')) return;
+    try {
+      const yangi = await api.get('/api/messages?after=' + CHAT_LAST);
+      if (yangi.length) { qoshMsgs(yangi, false); belgiYangila(); }
+    } catch (e) {}
+  }
+
+  async function yubor(e) {
+    e.preventDefault();
+    const el = document.getElementById('chatInput');
+    const matn = el.value.trim();
+    if (!matn) return false;
+    const btn = document.getElementById('chatBtn');
+    btn.disabled = true; el.disabled = true;
+    try {
+      await api.post('/api/messages', { body: matn });
+      el.value = '';
+      const yangi = await api.get('/api/messages?after=' + CHAT_LAST);
+      qoshMsgs(yangi, false);
+    } catch (err) { toast(err.message, false); }
+    btn.disabled = false; el.disabled = false; el.focus();
+    return false;
+  }
+
+  // Enter — yuborish, Shift+Enter — yangi qator
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('chatInput');
+    if (!el) return;
+    el.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); yubor(ev); }
+    });
+    el.addEventListener('input', () => { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; });
+  });
+
+  // Tab yonidagi o'qilmagan belgi
+  async function belgiYangila() {
+    const d = document.getElementById('chatDot');
+    if (!d) return;
+    try {
+      const x = await api.get('/api/messages/unread');
+      d.innerHTML = x.unread ? `<span class="dot">${x.unread}</span>` : '';
+    } catch (e) {}
+  }
+
+  // ==================== SERTIFIKAT ====================
+  async function loadCert() {
+    const V = document.getElementById('certView');
+    let list;
+    try { list = await api.get('/api/certificates'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    if (!list.length) {
+      V.innerHTML = `<div class="card"><div class="empty">Siz hali kursga biriktirilmagansiz.<br>
+        <span class="small">Kursni tugatganingizda sertifikat shu yerda paydo bo'ladi.</span></div></div>`;
+      return;
+    }
+
+    const olingan = list.filter(x => x.holat === 'olingan');
+    const kutilmoqda = list.filter(x => x.holat !== 'olingan');
+
+    V.innerHTML = `
+      <div class="stats" style="margin-bottom:18px;">
+        <div class="stat-card good"><div class="lab">Olingan sertifikat</div><div class="val">${olingan.length}</div></div>
+        <div class="stat-card accent"><div class="lab">Jarayonda</div><div class="val">${kutilmoqda.length}</div><div class="sub">kurs</div></div>
+      </div>
+
+      ${olingan.map(c => certHTML(c)).join('')}
+
+      ${kutilmoqda.length ? `<div class="card" style="margin-top:${olingan.length ? '18px' : '0'}">
+        <div class="section-title" style="margin-bottom:14px;">Kutilayotgan sertifikatlar</div>
+        ${kutilmoqda.map(c => kutishHTML(c)).join('')}
+      </div>` : ''}`;
+  }
+
+  const SIGMA = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5 L8 6.5 L13 12 L8 17.5 L17 17.5"/></svg>`;
+
+  function bahoNomi(s) {
+    if (s == null) return null;
+    return s >= 90 ? "A'lo" : s >= 75 ? 'Yaxshi' : s >= 60 ? 'Qoniqarli' : 'Tamomlandi';
+  }
+
+  function uzSana(d) {
+    if (!d) return '';
+    const oy = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+    const t = new Date(String(d).slice(0, 10) + 'T00:00:00');
+    if (isNaN(t)) return fmtDate(d);
+    return `${t.getFullYear()}-yil, ${t.getDate()}-${oy[t.getMonth()]}`;
+  }
+
+  function certHTML(c) {
+    const qr = '/api/qr/' + encodeURIComponent(c.number);
+    const baho = bahoNomi(c.score);
+    return `
+      <div class="cert-card" style="margin-bottom:18px; padding:0; background:none; border:none;">
+        <div class="cert-paper" id="cert-${c.course_id}">
+          <span class="cert-corner tl">Σ</span><span class="cert-corner tr">π</span>
+          <span class="cert-corner bl">∞</span><span class="cert-corner br">√</span>
+
+          <div class="cert-head">
+            <div class="cert-brand">
+              <span class="logo">${SIGMA}</span>
+              <div>
+                <b>Shokirov Math Academy</b>
+                <span>MATEMATIKA O'QUV MARKAZI</span>
+              </div>
+            </div>
+            <div class="cert-scan">
+              <div class="txt">TEKSHIRISH UCHUN<br>SCAN TO VERIFY</div>
+              <div class="cert-qr"><img src="${qr}" alt="QR" loading="lazy" /></div>
+            </div>
+          </div>
+
+          <div class="cert-body">
+            <div class="cert-eyebrow">Rasmiy sertifikat</div>
+            <div class="cert-word">SERTIFIKAT</div>
+            <div class="cert-lead">ushbu sertifikat quyidagi shaxsga topshiriladi</div>
+            <div class="cert-name">${esc(ME.full_name || 'Talaba')}</div>
+
+            <div class="cert-pills">
+              <div class="cert-pill"><b>${esc(c.title)}</b><span>KURS</span></div>
+              ${baho ? `<div class="cert-pill res"><b>${esc(baho)} · ${c.score}%</b><span>NATIJA</span></div>` : ''}
+            </div>
+
+            <div class="cert-text">
+              «${esc(c.title)}» kursini muvaffaqiyatli tamomlagani, mavzularni chuqur
+              o'zlashtirgani hamda yuqori natijalarga erishgani uchun taqdirlanadi.
+            </div>
+          </div>
+
+          <div class="cert-foot">
+            <div class="col cert-date">
+              <b>${uzSana(c.issued_at)}</b>
+              <span>Sana</span>
+            </div>
+            <div class="col mid"><span class="logo emblem">${SIGMA}</span></div>
+            <div class="col cert-sign">
+              <b>Shokirov Manuchehr</b>
+              <span>Ustoz</span>
+            </div>
+          </div>
+
+          <div class="cert-bar">
+            <span class="num">№ ${esc(c.number)}</span>
+            <span>Sariasiya, Surxondaryo · t.me/MSH_MATIMATIK · +998 88 194 04 20</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:9px; margin-top:14px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="chopEt('cert-${c.course_id}')">
+            <svg class="i" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg> Chop etish / PDF
+          </button>
+          <a class="btn btn-ghost btn-sm" href="verify.html?n=${encodeURIComponent(c.number)}" target="_blank" rel="noopener">Haqiqiyligini tekshirish</a>
+        </div>
+      </div>`;
+  }
+
+  // Faqat tanlangan sertifikatni chop etish
+  function chopEt(id) {
+    document.querySelectorAll('.cert-paper').forEach(el => el.classList.remove('print-me'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('print-me');
+    window.print();
+  }
+
+  function kutishHTML(c) {
+    const jarayon = c.jami_mashq ? Math.round(c.bajarilgan / c.jami_mashq * 100) : 0;
+    const tayyor = c.holat === 'tayyor';
+    return `
+      <div class="item">
+        <div class="top">
+          <div>
+            <h4>${esc(c.title)}</h4>
+            <div class="small muted">${esc(c.duration || '')} · tugaydi: ${fmtDate(c.tugaydi)}</div>
+          </div>
+          ${tayyor
+            ? `<span class="pay-pill partial">O'qituvchi tasdig'i kutilmoqda</span>`
+            : `<div class="days-left">${c.qolgan_kun}<small>kun qoldi</small></div>`}
+        </div>
+        <div class="progress" style="margin-top:11px;"><i style="width:${jarayon}%"></i></div>
+        <div class="small muted" style="margin-top:7px;">
+          Mashqlar: <b>${c.bajarilgan}</b>/${c.jami_mashq} bajarildi
+          ${c.bajarilgan ? ` · aniqlik <b style="color:var(--success)">${c.aniqlik}%</b>` : ''}
+        </div>
+      </div>`;
+  }
+
+  // ==================== IMTIHONLAR ====================
+  const IM_UZ  = { soon: 'Hali boshlanmagan', open: 'Topshirish mumkin', closed: 'Muddati tugagan' };
+  const IM_CLS = { soon: 'partial', open: 'paid', closed: 'unpaid' };
+  let IM_TAYMER = null, IM_HOZIR = null;
+
+  async function loadExams() {
+    imTaymerToxtat();
+    const V = document.getElementById('imView');
+    let rows;
+    try { rows = await api.get('/api/exams'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    imBelgiChiz(rows);
+
+    if (!rows.length) {
+      V.innerHTML = '<div class="card"><div class="empty">Hozircha imtihon e\'lon qilinmagan</div></div>';
+      return;
+    }
+    V.innerHTML = `<div class="card"><div class="section-title" style="margin-bottom:14px;">Imtihonlar</div>
+      <div class="stack">${rows.map(e => {
+        const tugatgan = !!e.submitted_at;
+        const foiz = tugatgan && Number(e.max_score) ? Math.round(e.score / e.max_score * 100) : null;
+        return `
+        <div class="item">
+          <div class="top">
+            <div>
+              <h4>${esc(e.title)}</h4>
+              <div class="small muted">
+                ${esc(e.course_name || 'Umumiy')} · ${e.savollar} savol
+                ${e.duration_min ? ' · ' + e.duration_min + ' daqiqa' : ''}
+                ${e.opens_at ? ' · ' + fmtDate(e.opens_at) : ''}
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              ${tugatgan
+                ? `<span class="pay-pill ${foiz >= 60 ? 'paid' : 'unpaid'}">${foiz}% · ${e.score}/${e.max_score}</span>
+                   <button class="btn btn-ghost btn-sm" onclick="imKor(${e.id})">Javoblarni ko'rish</button>`
+                : `<span class="pay-pill ${IM_CLS[e.holat]}">${IM_UZ[e.holat]}</span>
+                   ${e.holat === 'open' ? `<button class="btn btn-primary btn-sm" onclick="imBoshla(${e.id})">Boshlash</button>` : ''}`}
+            </div>
+          </div>
+        </div>`; }).join('')}</div></div>`;
+  }
+
+  function imTaymerToxtat() { if (IM_TAYMER) { clearInterval(IM_TAYMER); IM_TAYMER = null; } }
+
+  // Tab yonidagi "topshirilmagan imtihon" belgisi
+  function imBelgiChiz(rows) {
+    const d = document.getElementById('imDot');
+    if (!d) return;
+    const n = rows.filter(e => e.holat === 'open' && !e.submitted_at).length;
+    d.innerHTML = n ? `<span class="dot">${n}</span>` : '';
+  }
+  async function imBelgiYangila() {
+    try { imBelgiChiz(await api.get('/api/exams')); } catch (e) {}
+  }
+
+  async function imBoshla(id) {
+    if (!confirm('Imtihon boshlansinmi? Faqat bir marta topshirish mumkin.')) return;
+    let st;
+    try { st = await api.post('/api/exams/' + id + '/start'); } catch (e) { return toast(e.message, false); }
+    let d;
+    try { d = await api.get('/api/exams/' + id); } catch (e) { return toast(e.message, false); }
+    IM_HOZIR = { id, javoblar: {} };
+
+    const V = document.getElementById('imView');
+    V.innerHTML = `
+      <div class="card">
+        <div class="spread" style="margin-bottom:6px;">
+          <div class="section-title" style="margin:0;">${esc(d.exam.title)}</div>
+          <span class="pay-pill paid" id="imTimer">${d.exam.duration_min ? '—' : 'vaqt cheklovsiz'}</span>
+        </div>
+        <p class="muted small">${d.questions.length} savol · har birini belgilang, so'ng pastdan topshiring.</p>
+      </div>
+      <div class="stack" style="margin-top:16px;">
+        ${d.questions.map((q, i) => {
+          const o = typeof q.options === 'string' ? JSON.parse(q.options) : (q.options || {});
+          return `
+          <div class="card" style="padding:18px;">
+            <div style="font-weight:600; margin-bottom:12px;"><b>${i + 1}.</b> ${esc(q.prompt)}</div>
+            ${Object.keys(o).length
+              ? Object.entries(o).map(([L, v]) => `
+                  <label class="im-opt">
+                    <input type="radio" name="q${q.id}" value="${L}" onchange="imBelgi(${q.id}, '${L}')" />
+                    <span class="L">${L}</span><span>${esc(v)}</span>
+                  </label>`).join('')
+              : ['A','B','C','D','E'].map(L => `
+                  <label class="im-opt">
+                    <input type="radio" name="q${q.id}" value="${L}" onchange="imBelgi(${q.id}, '${L}')" />
+                    <span class="L">${L}</span>
+                  </label>`).join('')}
+          </div>`; }).join('')}
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="spread">
+          <div class="small muted" id="imHolat">0 / ${d.questions.length} belgilandi</div>
+          <div style="display:flex; gap:9px; flex-wrap:wrap;">
+            <button class="btn btn-ghost" onclick="loadExams()">Bekor qilish</button>
+            <button class="btn btn-primary" onclick="imTopshir(${id})">Topshirish</button>
+          </div>
+        </div>
+      </div>`;
+    IM_HOZIR.jami = d.questions.length;
+
+    // Taymerni serverdagi boshlanish vaqtidan hisoblaymiz — sahifa yangilansa ham to'g'ri qoladi
+    if (d.exam.duration_min) {
+      const tugash = new Date(st.started_at).getTime() + d.exam.duration_min * 60000;
+      const chiz = () => {
+        const qoldi = Math.max(0, tugash - Date.now());
+        const el = document.getElementById('imTimer');
+        if (!el) return imTaymerToxtat();
+        const m = Math.floor(qoldi / 60000), sk = Math.floor(qoldi % 60000 / 1000);
+        el.textContent = `${m}:${String(sk).padStart(2, '0')} qoldi`;
+        el.className = 'pay-pill ' + (qoldi < 120000 ? 'unpaid' : qoldi < 300000 ? 'partial' : 'paid');
+        if (qoldi <= 0) { imTaymerToxtat(); toast('Vaqt tugadi — javoblar yuborilmoqda', false); imTopshir(id, true); }
+      };
+      chiz();
+      IM_TAYMER = setInterval(chiz, 1000);
+    }
+  }
+
+  function imBelgi(qid, L) {
+    if (!IM_HOZIR) return;
+    IM_HOZIR.javoblar[qid] = L;
+    const el = document.getElementById('imHolat');
+    if (el) el.textContent = `${Object.keys(IM_HOZIR.javoblar).length} / ${IM_HOZIR.jami} belgilandi`;
+  }
+
+  async function imTopshir(id, majburiy) {
+    if (!IM_HOZIR) return;
+    const belgilangan = Object.keys(IM_HOZIR.javoblar).length;
+    if (!majburiy) {
+      const qolgan = IM_HOZIR.jami - belgilangan;
+      const savol = qolgan
+        ? `${qolgan} ta savol belgilanmagan. Baribir topshirasizmi?`
+        : 'Javoblaringizni topshirasizmi? Qayta o\'zgartirib bo\'lmaydi.';
+      if (!confirm(savol)) return;
+    }
+    imTaymerToxtat();
+    let r;
+    try { r = await api.post('/api/exams/' + id + '/submit', { answers: IM_HOZIR.javoblar }); }
+    catch (e) { return toast(e.message, false); }
+    IM_HOZIR = null;
+    toast(`Natija: ${r.score}/${r.max_score} — ${r.foiz}%`);
+    imBelgiYangila();   // topshirilgach tab yonidagi belgi kamayadi
+    imKor(id);
+  }
+
+  // Topshirilgan imtihon: o'z javoblari va to'g'ri javoblar
+  async function imKor(id) {
+    imTaymerToxtat();
+    const V = document.getElementById('imView');
+    V.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d, nat;
+    try { [d, nat] = await Promise.all([api.get('/api/exams/' + id), api.get('/api/exams/' + id + '/results')]); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const men = nat.results[0];
+    const foiz = men ? men.foiz : 0;
+    V.innerHTML = `
+      <div class="card">
+        <div class="spread">
+          <div>
+            <div class="section-title" style="margin:0;">${esc(d.exam.title)}</div>
+            <p class="muted small">${men ? `${nat.jami_topshirgan} kishi topshirdi · sizning o'rningiz #${men.rank}` : ''}</p>
+          </div>
+          <div class="days-left" style="text-align:center;">${foiz}%<small>${men ? men.score + '/' + men.max_score : ''}</small></div>
+        </div>
+      </div>
+      <div class="stack" style="margin-top:16px;">
+        ${d.questions.map((q, i) => {
+          const o = typeof q.options === 'string' ? JSON.parse(q.options) : (q.options || {});
+          const belgilar = Object.keys(o).length ? Object.keys(o) : ['A','B','C','D','E'];
+          return `
+          <div class="card" style="padding:18px;">
+            <div class="spread" style="margin-bottom:10px;">
+              <div style="font-weight:600;"><b>${i + 1}.</b> ${esc(q.prompt)}</div>
+              <span class="pay-pill ${q.togri ? 'paid' : 'unpaid'}">${q.togri ? "To'g'ri" : q.javobim ? 'Xato' : 'Belgilanmagan'}</span>
+            </div>
+            ${belgilar.map(L => {
+              const togriMi = L === q.answer_letter, meniki = L === q.javobim;
+              return `<div class="im-opt ${togriMi ? 'ok' : meniki ? 'bad' : ''}">
+                <span class="L">${L}</span><span>${esc(o[L] || '')}</span>
+                ${togriMi ? '<span class="small" style="margin-left:auto;color:var(--success)">to\'g\'ri javob</span>'
+                  : meniki ? '<span class="small" style="margin-left:auto;color:var(--danger)">siz belgiladingiz</span>' : ''}
+              </div>`; }).join('')}
+          </div>`; }).join('')}
+      </div>
+      <button class="btn btn-ghost" style="margin-top:16px;" onclick="loadExams()">← Imtihonlar ro'yxati</button>`;
+  }
+
+  // ==================== JADVAL VA KALENDAR ====================
+  const KUNLAR = ['', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'];
+
+  async function loadCal() {
+    if (!document.getElementById('sOy').value)
+      document.getElementById('sOy').value = new Date().toISOString().slice(0, 7);
+
+    const box = document.getElementById('sJadval');
+    let rows;
+    try { rows = await api.get('/api/schedule'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    if (!rows.length) box.innerHTML = '<div class="empty">Jadval hali e\'lon qilinmagan</div>';
+    else {
+      const kunlar = {};
+      rows.forEach(x => (kunlar[x.weekday] = kunlar[x.weekday] || []).push(x));
+      box.innerHTML = `<div class="week">${Object.keys(kunlar).sort().map(w => `
+        <div class="wday">
+          <h4>${KUNLAR[w]}</h4>
+          ${kunlar[w].map(d => `
+            <div class="slot">
+              <span class="txt">
+                <b>${esc(d.start_time)}${d.end_time ? '–' + esc(d.end_time) : ''}</b>
+                <em>${esc(d.course_name || 'Umumiy dars')}${d.room ? ' · ' + esc(d.room) : ''}</em>
+              </span>
+            </div>`).join('')}
+        </div>`).join('')}</div>`;
+    }
+    loadSKal();
+  }
+
+  async function loadSKal() {
+    const oy = document.getElementById('sOy').value || new Date().toISOString().slice(0, 7);
+    const box = document.getElementById('sKal');
+    try { box.innerHTML = kalendarHTML(oy, await api.get('/api/events?period=' + oy), false); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; }
+  }
+
+  // Dashboard tepasidagi "keyingi dars" kartasi
+  async function keyingiDars() {
+    const box = document.getElementById('nextLes');
+    if (!box) return;
+    let a;
+    try { a = await api.get('/api/agenda'); } catch (e) { return; }
+    const d = a.keyingi_dars;
+    if (!d) return;
+
+    const qachon = d.kun_farq === 0 ? 'Bugun' : d.kun_farq === 1 ? 'Ertaga' : KUNLAR[d.weekday];
+    const yaqin = (a.hodisalar || [])[0];
+    box.innerHTML = `
+      <div class="nextles">
+        <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <div>
+          <b>Keyingi dars — ${qachon}, ${esc(d.start_time)}${d.end_time ? '–' + esc(d.end_time) : ''}</b>
+          <div class="small muted">${esc(d.course_name || 'Umumiy dars')}${d.room ? ' · ' + esc(d.room) : ''}${
+            yaqin ? ` · yaqin hodisa: ${esc(yaqin.title)} (${fmtDate(yaqin.day)})` : ''}</div>
+        </div>
+      </div>`;
+  }
+
+  // ==================== DASHBOARD ====================
+  const STATUS_UZ = { present: 'Keldi', absent: 'Kelmadi', late: 'Kechikdi', excused: 'Sababli' };
+  const PAY_UZ = { paid: "To'landi", unpaid: 'To\'lanmagan', partial: 'Qisman' };
+  const money = n => Number(n || 0).toLocaleString('uz-UZ') + " so'm";
+
+  // Ma'lumot kelguncha ko'rsatiladigan "suyak" — bo'sh ekran o'rniga
+  function skeletonHTML() {
+    return `<div class="stats" style="margin-bottom:16px;">${
+      Array.from({ length: 4 }, () => `
+        <div class="stat-card">
+          <div class="sk sk-lab"></div>
+          <div class="sk sk-val"></div>
+          <div class="sk sk-sub"></div>
+        </div>`).join('')}</div>
+      <div class="card"><div class="sk sk-lab" style="width:40%"></div>
+        <div class="sk sk-row" style="margin-top:14px"></div></div>`;
+  }
+
+  function rankKartaHTML(orin, jami) {
+    return `<div class="stat-card accent">
+      <div class="lab">Reytingdagi o'rnim</div>
+      <div class="val">#${orin}</div>
+      <div class="sub">${jami} talaba ichida</div>
+    </div>`;
+  }
+
+  async function loadDash() {
+    const V = document.getElementById('dashView');
+    if (/Yuklanmoqda/.test(V.innerText || '')) V.innerHTML = skeletonHTML();
+
+    // Ikkala so'rov birga yuboriladi. Dashboard kelishi bilan darhol chiziladi —
+    // reyting kutilmaydi, o'rin kartasi kelgach o'zi qo'shiladi.
+    const rtP = api.get('/api/rating').catch(() => null);
+    rtP.then(list => {
+      if (!Array.isArray(list)) return;
+      const me = list.find(x => x.me);
+      const box = document.getElementById('rankCard');
+      if (me && box) box.innerHTML = rankKartaHTML(me.rank, list.length);
+    });
+
+    let d;
+    const rank = null;   // birinchi chizishda o'rin hali ma'lum emas
+    try { d = await api.get('/api/dashboard/student'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const acc = d.exercises.accuracy;
+    const att = d.attendance;
+    const pay = d.payments;
+    V.innerHTML = `
+      <div id="nextLes"></div>
+      <div class="stats" style="margin-bottom:16px;">
+        <div class="stat-card accent">
+          <div class="lab">Yechilgan mashqlar</div>
+          <div class="val">${d.exercises.attempted}</div>
+          <div class="sub">${d.exercises.total ? 'jami ' + d.exercises.total + ' tadan' : ''}</div>
+        </div>
+        <div class="stat-card ${acc >= 80 ? 'good' : acc >= 60 ? 'warn' : 'bad'}">
+          <div class="lab">To'g'ri javoblar</div>
+          <div class="val">${acc}%</div>
+          <div class="sub">${d.exercises.correct} ta to'g'ri</div>
+        </div>
+        <div class="stat-card ${att.rate >= 80 ? 'good' : att.rate >= 60 ? 'warn' : 'bad'}">
+          <div class="lab">Davomat</div>
+          <div class="val">${att.rate}%</div>
+          <div class="sub">${att.present} keldi · ${att.absent} kelmadi</div>
+        </div>
+        <div class="stat-card ${pay.this_month === 'paid' ? 'good' : 'bad'}">
+          <div class="lab">Bu oy to'lov</div>
+          <div class="val" style="font-size:22px;">${PAY_UZ[pay.this_month] || pay.this_month}</div>
+          <div class="sub">${pay.period}${pay.debt ? ' · ' + pay.debt + ' oy qarz' : ''}</div>
+        </div>
+        <div id="rankCard" style="display:contents;">${rank ? rankKartaHTML(rank.rank, rank.of) : ''}</div>
+        ${d.grades.count ? `<div class="stat-card ${d.grades.avg >= 80 ? 'good' : d.grades.avg >= 60 ? 'warn' : 'bad'}">
+          <div class="lab">O'rtacha baho</div>
+          <div class="val">${d.grades.avg}%</div>
+          <div class="sub">${d.grades.count} ta baho</div>
+        </div>` : ''}
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-bottom:10px;">Tezkor havolalar</div>
+        <div style="display:flex; gap:9px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="switchTab('courses')">Mashqlarni davom ettirish →</button>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('rating')">Reytingni ko'rish</button>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('attend')">Davomatim</button>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('pay')">To'lovlarim</button>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('cal')">Dars jadvali</button>
+        </div>
+      </div>`;
+
+    keyingiDars();   // innerHTML yozilgandan keyin chaqiriladi
+  }
+
+  // ==================== REYTING ====================
+  let RATING_INIT = false;
+  async function initRating() {
+    if (!RATING_INIT) {
+      RATING_INIT = true;
+      const sel = document.getElementById('ratingCourse');
+      let list = [];
+      try { list = await api.get('/api/enrollments'); } catch (e) {}
+      sel.innerHTML = `<option value="">Barcha kurslar</option>` +
+        list.map(c => `<option value="${c.course_id}">${esc(c.title)}</option>`).join('');
+    }
+    loadRating();
+  }
+
+  async function loadRating() {
+    const box = document.getElementById('ratingList');
+    const cid = document.getElementById('ratingCourse').value;
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let list;
+    try { list = await api.get('/api/rating' + (cid ? '?course_id=' + cid : '')); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!list.length) { box.innerHTML = '<div class="empty">Hozircha ma\'lumot yo\'q</div>'; return; }
+    box.innerHTML = list.map(x => `
+      <div class="rank-row ${x.me ? 'me' : ''}">
+        <span class="rank-no ${x.rank === 1 ? 'g1' : x.rank === 2 ? 'g2' : x.rank === 3 ? 'g3' : ''}">${x.rank}</span>
+        ${x.avatar
+          ? `<span class="avatar" style="width:34px;height:34px;background-image:url('${x.avatar}');background-size:cover;background-position:center;"></span>`
+          : `<span class="avatar" style="width:34px;height:34px;font-size:14px;">${esc((x.full_name || '?').charAt(0).toUpperCase())}</span>`}
+        <span class="who">${esc(x.full_name || 'Ismsiz')}${x.me ? ' <span class="small muted">(siz)</span>' : ''}</span>
+        <span class="sc"><b>${x.correct}</b>${x.attempted ? x.accuracy + '% aniqlik' : '—'}</span>
+      </div>`).join('');
+  }
+
+  // ==================== DAVOMAT ====================
+  async function loadAttend() {
+    const V = document.getElementById('attendView');
+    let list;
+    try { list = await api.get('/api/attendance'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const n = list.length;
+    const p = list.filter(x => x.status === 'present').length;
+    const a = list.filter(x => x.status === 'absent').length;
+    const l = list.filter(x => x.status === 'late').length;
+    const rate = n ? Math.round(p / n * 100) : 0;
+
+    V.innerHTML = `
+      <div class="stats" style="margin-bottom:16px;">
+        <div class="stat-card ${rate >= 80 ? 'good' : rate >= 60 ? 'warn' : 'bad'}"><div class="lab">Davomat</div><div class="val">${rate}%</div><div class="sub">${n} ta dars</div></div>
+        <div class="stat-card good"><div class="lab">Keldim</div><div class="val">${p}</div></div>
+        <div class="stat-card bad"><div class="lab">Kelmadim</div><div class="val">${a}</div></div>
+        <div class="stat-card warn"><div class="lab">Kechikdim</div><div class="val">${l}</div></div>
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;">Dars kunlari</div>
+        ${n ? `<div class="att-grid">${list.slice().reverse().map(x => {
+          const dd = new Date(x.day);
+          return `<div class="att-day ${x.status}" title="${fmtDate(x.day)} — ${STATUS_UZ[x.status]}">${dd.getDate()}</div>`;
+        }).join('')}</div>
+        <div class="att-legend">
+          <span><i style="background:rgba(52,211,153,.5)"></i>Keldi</span>
+          <span><i style="background:rgba(251,113,133,.5)"></i>Kelmadi</span>
+          <span><i style="background:rgba(251,191,36,.5)"></i>Kechikdi</span>
+          <span><i style="background:rgba(109,139,255,.5)"></i>Sababli</span>
+        </div>
+        <div class="stack" style="margin-top:18px;">${list.slice(0, 12).map(x => `
+          <div class="item"><div class="top">
+            <div><b>${fmtDate(x.day)}</b>${x.note ? `<div class="small muted">${esc(x.note)}</div>` : ''}</div>
+            <span class="pay-pill ${x.status === 'present' ? 'paid' : x.status === 'absent' ? 'unpaid' : 'partial'}">${STATUS_UZ[x.status]}</span>
+          </div></div>`).join('')}</div>`
+        : '<div class="empty">Hozircha davomat belgilanmagan</div>'}
+      </div>`;
+  }
+
+  // ==================== TO'LOVLAR ====================
+  async function loadPay() {
+    const V = document.getElementById('payView');
+    let list;
+    try { list = await api.get('/api/payments'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const paid = list.filter(x => x.status === 'paid');
+    const debt = list.filter(x => x.status !== 'paid');
+    const total = paid.reduce((s, x) => s + Number(x.amount || 0), 0);
+
+    V.innerHTML = `
+      <div class="stats" style="margin-bottom:16px;">
+        <div class="stat-card good"><div class="lab">To'langan oylar</div><div class="val">${paid.length}</div></div>
+        <div class="stat-card ${debt.length ? 'bad' : 'good'}"><div class="lab">Qarzdorlik</div><div class="val">${debt.length}</div><div class="sub">oy</div></div>
+        <div class="stat-card accent"><div class="lab">Jami to'langan</div><div class="val" style="font-size:23px;">${money(total)}</div></div>
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;">To'lov tarixi</div>
+        ${list.length ? `<div class="stack">${list.map(x => `
+          <div class="item"><div class="top">
+            <div>
+              <b>${esc(x.period)}</b>
+              <div class="small muted">${x.amount ? money(x.amount) : '—'}${x.paid_at ? ' · ' + fmtDate(x.paid_at) : ''}${x.method ? ' · ' + esc(x.method) : ''}</div>
+              ${x.note ? `<div class="small muted">${esc(x.note)}</div>` : ''}
+            </div>
+            <span class="pay-pill ${x.status}">${PAY_UZ[x.status]}</span>
+          </div></div>`).join('')}</div>`
+        : '<div class="empty">To\'lov yozuvlari yo\'q</div>'}
+      </div>`;
+  }
+
+  // ---------------- PROFIL ----------------
+  let NEW_AVATAR = undefined; // undefined = o'zgarmagan, null = o'chirilgan, string = yangi rasm
+
+  function renderProfile() {
+    document.getElementById('pf_name').value = ME.full_name || '';
+    document.getElementById('pf_phone').value = ME.phone || '';
+    document.getElementById('pf_email').value = ME.email || '';
+    paintAvatar(ME.avatar);
+  }
+
+  function paintAvatar(src) {
+    const el = document.getElementById('avatarPreview');
+    if (src) {
+      el.style.backgroundImage = `url('${src}')`;
+      el.textContent = '';
+      document.getElementById('avatarDelBtn').style.display = '';
+    } else {
+      el.style.backgroundImage = '';
+      el.textContent = (ME.full_name || '?').trim().charAt(0).toUpperCase();
+      document.getElementById('avatarDelBtn').style.display = 'none';
+    }
+    // Header avatarini ham yangilash
+    const h = document.getElementById('headerAvatar');
+    if (h) {
+      if (src) { h.style.backgroundImage = `url('${src}')`; h.textContent = ''; }
+      else { h.style.backgroundImage = ''; h.textContent = (ME.full_name || '?').trim().charAt(0).toUpperCase(); }
+    }
+  }
+
+  async function pickAvatar(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      NEW_AVATAR = await resizeImageToDataURL(file, 256);
+      paintAvatar(NEW_AVATAR);
+      toast("Rasm tanlandi — saqlashni unutmang");
+    } catch (err) { toast(err.message, false); }
+    e.target.value = '';
+  }
+
+  function removeAvatar() {
+    NEW_AVATAR = null;
+    paintAvatar(null);
+    toast("Rasm o'chirildi — saqlashni unutmang");
+  }
+
+  async function saveProfile(e) {
+    e.preventDefault();
+    const pass = document.getElementById('pf_pass').value;
+    const pass2 = document.getElementById('pf_pass2').value;
+    if (pass && pass !== pass2) { toast('Parollar mos kelmadi', false); return false; }
+    const btn = document.getElementById('pf_btn');
+    btn.disabled = true; btn.textContent = 'Saqlanmoqda…';
+    const payload = {
+      full_name: document.getElementById('pf_name').value.trim(),
+      phone: document.getElementById('pf_phone').value.trim()
+    };
+    if (NEW_AVATAR !== undefined) payload.avatar = NEW_AVATAR;
+    if (pass) payload.password = pass;
+    try {
+      const d = await api.patch('/api/profile', payload);
+      ME = d.user;
+      NEW_AVATAR = undefined;
+      document.getElementById('pf_pass').value = '';
+      document.getElementById('pf_pass2').value = '';
+      document.getElementById('hello').textContent = 'Salom, ' + (ME.full_name || 'talaba') + '!';
+      paintAvatar(ME.avatar);
+      toast('Profil saqlandi ✓');
+    } catch (err) { toast(err.message, false); }
+    btn.disabled = false; btn.textContent = 'Saqlash';
+    return false;
+  }
+
+  function gradeClass(score, max) { const p = (score / max) * 100; return p >= 80 ? 'good' : p >= 60 ? 'mid' : 'low'; }
+
+  // ==================== KURSLARIM ====================
+  let COURSES_LOADED = false;
+  let CUR_COURSE = null, CUR_TOPIC = null, EX_PAGE = 0;
+  const EX_PER_PAGE = 20;
+  const V = () => document.getElementById('coursesView');
+
+  function pct(a, b) { return b ? Math.round(a / b * 100) : 0; }
+
+  async function loadCourses() {
+    COURSES_LOADED = true;
+    V().innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let list;
+    try { list = await api.get('/api/progress'); }
+    catch (e) { V().innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    if (!list.length) {
+      V().innerHTML = `<div class="card"><div class="empty">Siz hali biror kursga biriktirilmagansiz.<br><span class="small">O'qituvchi sizni kursga qo'shgach, bu yerda ko'rinadi.</span></div></div>`;
+      return;
+    }
+    V().innerHTML = `<div class="grid-cards">` + list.map(c => `
+      <button class="course-card" onclick="openCourse(${c.course_id})">
+        <h3>${esc(c.title)}</h3>
+        <div class="small muted">${esc(c.duration || '')} · ${c.total} ta mashq</div>
+        <div class="progress"><i style="width:${pct(c.submitted, c.total)}%"></i></div>
+        <div class="small muted" style="margin-top:7px;">
+          Bajarildi: <b>${c.submitted}</b>/${c.total} · To'g'ri: <b style="color:var(--success)">${c.correct}</b>
+        </div>
+      </button>`).join('') + `</div>`;
+  }
+
+  async function openCourse(courseId) {
+    V().innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d;
+    try { d = await api.get('/api/courses/' + courseId + '/topics'); }
+    catch (e) { V().innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    CUR_COURSE = d.course;
+
+    const book = (d.course.book_file && d.course.book_exists)
+      ? `<a class="btn btn-ghost btn-sm" href="assets/books/${encodeURIComponent(d.course.book_file)}" target="_blank" rel="noopener">
+           <svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kitobni ochish
+         </a>` : '';
+
+    V().innerHTML = `
+      <div class="crumb">
+        <button onclick="loadCourses()">← Kurslarim</button>
+        <span>/ ${esc(d.course.title)}</span>
+      </div>
+      <div class="card">
+        <div class="spread" style="margin-bottom:16px;">
+          <div>
+            <div class="section-title">${esc(d.course.title)}</div>
+            <div class="small muted">${d.topics.length} ta mavzu</div>
+          </div>
+          ${book}
+        </div>
+        <div>${d.topics.map(t => {
+          const p = pct(t.submitted, t.total);
+          const col = p === 0 ? 'var(--muted)' : p >= 100 ? 'var(--success)' : 'var(--brand-2)';
+          return `<button class="topic-row" onclick="openTopic(${t.id})">
+            <span class="ring" style="border:2px solid ${col}; color:${col}">${p}%</span>
+            <span class="t-title">${esc(t.title)}</span>
+            <span class="t-meta">${t.submitted}/${t.total}${t.correct ? ` · <b style="color:var(--success)">${t.correct}</b> to'g'ri` : ''}</span>
+          </button>`;
+        }).join('')}</div>
+      </div>`;
+  }
+
+  async function openTopic(topicId, page) {
+    EX_PAGE = page || 0;
+    V().innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d;
+    try { d = await api.get('/api/topics/' + topicId + '/exercises'); }
+    catch (e) { V().innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    CUR_TOPIC = d;
+    renderExercises();
+  }
+
+  function renderExercises() {
+    const d = CUR_TOPIC;
+    const all = d.exercises;
+    const pages = Math.max(1, Math.ceil(all.length / EX_PER_PAGE));
+    if (EX_PAGE >= pages) EX_PAGE = pages - 1;
+    const slice = all.slice(EX_PAGE * EX_PER_PAGE, (EX_PAGE + 1) * EX_PER_PAGE);
+    const doneCount = all.filter(e => e.submission).length;
+    const okCount = all.filter(e => e.submission && e.submission.is_correct).length;
+
+    V().innerHTML = `
+      <div class="crumb">
+        <button onclick="loadCourses()">← Kurslarim</button>
+        <span>/</span>
+        <button onclick="openCourse(${CUR_COURSE.id})">${esc(CUR_COURSE.title)}</button>
+        <span>/ ${esc(d.topic.title)}</span>
+      </div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="spread">
+          <div>
+            <div class="section-title">${esc(d.topic.title)}</div>
+            <div class="small muted">${all.length} ta mashq · bajarildi ${doneCount} · to'g'ri <b style="color:var(--success)">${okCount}</b></div>
+          </div>
+          ${(CUR_COURSE.book_file && CUR_COURSE.book_exists) ? `<a class="btn btn-ghost btn-sm" href="assets/books/${encodeURIComponent(CUR_COURSE.book_file)}${d.topic.page_from ? '#page=' + d.topic.page_from : ''}" target="_blank" rel="noopener">Kitobda ochish</a>` : ''}
+        </div>
+        <div class="progress"><i style="width:${pct(doneCount, all.length)}%"></i></div>
+      </div>
+      <div id="exList">${slice.map(exHTML).join('')}</div>
+      ${pages > 1 ? `<div class="pager">
+        <button class="btn btn-ghost btn-sm" ${EX_PAGE === 0 ? 'disabled' : ''} onclick="gotoPage(${EX_PAGE - 1})">← Oldingi</button>
+        <span class="small muted">${EX_PAGE + 1} / ${pages}</span>
+        <button class="btn btn-ghost btn-sm" ${EX_PAGE >= pages - 1 ? 'disabled' : ''} onclick="gotoPage(${EX_PAGE + 1})">Keyingi →</button>
+      </div>` : ''}`;
+  }
+
+  function gotoPage(p) { EX_PAGE = p; renderExercises(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+  function exHTML(e) {
+    const s = e.submission;
+    const answered = !!s;
+    const isOk = s && s.is_correct === true;
+    const cls = answered ? (isOk ? 'done-ok' : (s.is_correct === false ? 'done-bad' : '')) : '';
+    let opts = '';
+    if (e.options) {
+      opts = `<div class="opts">` + ['A','B','C','D','E'].filter(L => e.options[L] != null).map(L => {
+        let c = 'opt';
+        if (answered) {
+          if (e.answer_letter && L === e.answer_letter) c += ' correct';
+          else if (s.answer_letter === L) c += ' wrong';
+        }
+        return `<button class="${c}" ${answered ? 'disabled' : ''} onclick="answerEx(${e.id},'${L}')">
+          <span class="L">${L}</span><span>${esc(e.options[L])}</span></button>`;
+      }).join('') + `</div>`;
+    } else {
+      opts = answered
+        ? `<div class="small muted" style="margin-top:10px;">Javobingiz: <b>${esc(s.answer || '')}</b></div>`
+        : `<div style="display:flex; gap:8px; margin-top:11px; flex-wrap:wrap;">
+             <input class="input" id="ans-${e.id}" placeholder="Javobingiz…" style="flex:1" />
+             <button class="btn btn-primary btn-sm" onclick="answerText(${e.id})">Yuborish</button>
+           </div>`;
+    }
+    let result = '';
+    if (answered) {
+      if (isOk) result = `<div class="ex-result good">✓ To'g'ri!</div>`;
+      else if (s.is_correct === false) result = `<div class="ex-result bad">✗ Xato${e.answer_letter ? ` — to'g'ri javob: <b>${e.answer_letter}</b>` : ''}</div>`;
+      else result = `<div class="ex-result muted">⏳ O'qituvchi tekshiradi</div>`;
+      if (s.teacher_note) result += `<div class="small muted" style="margin-top:5px;">O'qituvchi: ${esc(s.teacher_note)}</div>`;
+    }
+    return `<div class="ex ${cls}" id="ex-${e.id}">
+      <div class="ex-head">
+        <span class="ex-num">${esc(e.number)}.</span>
+        ${e.ref ? `<span class="ex-ref">(${esc(e.ref)})</span>` : ''}
+        ${e.page ? `<span class="ex-ref">· ${e.page}-bet</span>` : ''}
+      </div>
+      <div class="ex-prompt">${esc(e.prompt || '')}</div>
+      ${opts}${result}</div>`;
+  }
+
+  async function answerEx(exId, letter) {
+    let r;
+    try { r = await api.post('/api/submissions', { exercise_id: exId, answer_letter: letter }); }
+    catch (e) { return toast(e.message, false); }
+    const e = CUR_TOPIC.exercises.find(x => x.id === exId);
+    e.submission = { answer_letter: letter, is_correct: r.is_correct, checked_by: r.checked_by };
+    if (r.correct_letter) e.answer_letter = r.correct_letter;
+    if (r.correct_answer) e.correct_answer = r.correct_answer;
+    document.getElementById('ex-' + exId).outerHTML = exHTML(e);
+    if (r.is_correct === true) toast("To'g'ri! ✓");
+    else if (r.is_correct === false) toast('Xato — javobni ko\'ring', false);
+  }
+
+  async function answerText(exId) {
+    const el = document.getElementById('ans-' + exId);
+    const val = (el.value || '').trim();
+    if (!val) return toast('Javob yozing', false);
+    let r;
+    try { r = await api.post('/api/submissions', { exercise_id: exId, answer: val }); }
+    catch (e) { return toast(e.message, false); }
+    const e = CUR_TOPIC.exercises.find(x => x.id === exId);
+    e.submission = { answer: val, is_correct: r.is_correct, checked_by: r.checked_by };
+    document.getElementById('ex-' + exId).outerHTML = exHTML(e);
+    toast(r.is_correct === true ? "To'g'ri! ✓" : r.is_correct === false ? 'Xato' : 'Yuborildi — o\'qituvchi tekshiradi');
+  }
+
+  async function loadAll() {
+    try {
+      const [g, f, a] = await Promise.all([
+        api.get('/api/grades'),
+        api.get('/api/feedback'),
+        api.get('/api/assignments')
+      ]);
+      renderGrades(g || []);
+      renderFeedback(f || []);
+      renderTasks(a || []);
+    } catch (e) { toast(e.message, false); }
+  }
+
+  function renderGrades(list) {
+    const box = document.getElementById('gradesList');
+    if (!list.length) { box.innerHTML = '<div class="empty">Hozircha baho yo\'q</div>'; document.getElementById('avgBox').innerHTML = ''; return; }
+    const avg = list.reduce((s, g) => s + (g.score / g.max_score) * 100, 0) / list.length;
+    document.getElementById('avgBox').innerHTML = `<span class="grade-pill ${avg >= 80 ? 'good' : avg >= 60 ? 'mid' : 'low'}">O'rtacha: ${avg.toFixed(1)}%</span>`;
+    box.innerHTML = list.map(g => `
+      <div class="item"><div class="top">
+        <div><h4>${esc(g.topic)}</h4>${g.note ? `<div class="small muted">${esc(g.note)}</div>` : ''}<div class="small muted">${fmtDate(g.created_at)}</div></div>
+        <span class="grade-pill ${gradeClass(g.score, g.max_score)}">${g.score}/${g.max_score}</span>
+      </div></div>`).join('');
+  }
+
+  function renderFeedback(list) {
+    const box = document.getElementById('fbList');
+    box.innerHTML = list.length ? list.map(f => `
+      <div class="item">${esc(f.message)}<div class="small muted" style="margin-top:6px;">${fmtDate(f.created_at)}</div></div>`).join('')
+      : '<div class="empty">Hozircha izoh yo\'q</div>';
+  }
+
+  const WORK_UZ = { submitted: 'Tekshirilmoqda', accepted: 'Qabul qilindi', rework: 'Qayta ishlash' };
+  const WORK_CLS = { submitted: 'partial', accepted: 'paid', rework: 'unpaid' };
+
+  function renderTasks(list) {
+    TASKS = list;
+    const pending = list.filter(a => !a.done).length;
+    document.getElementById('tasksCount').textContent = pending ? `(${pending})` : '';
+    const box = document.getElementById('asList');
+    box.innerHTML = list.length ? list.map(a => {
+      const st = a.work_status;
+      const muddat = a.due_date ? new Date(String(a.due_date).slice(0,10)) : null;
+      const kechikkan = muddat && !st && muddat < new Date();
+      return `
+      <div class="item" id="task-${a.id}">
+        <div class="top">
+          <div>
+            <h4>${esc(a.title)}</h4>
+            ${a.description ? `<div class="small muted">${esc(a.description)}</div>` : ''}
+            <div class="small muted">
+              ${a.due_date ? 'Muddat: ' + fmtDate(a.due_date) : ''}
+              ${kechikkan ? ' · <b style="color:var(--danger)">muddati o\'tgan</b>' : ''}
+            </div>
+          </div>
+          ${st ? `<span class="pay-pill ${WORK_CLS[st]}">${WORK_UZ[st]}${a.work_score != null ? ' · ' + a.work_score + '%' : ''}</span>` : ''}
+        </div>
+
+        ${st ? `
+          <div class="small" style="margin-top:10px; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px;">
+            <div class="muted" style="margin-bottom:4px;">Javobingiz${a.submitted_at ? ' · ' + fmtDate(a.submitted_at) : ''}:</div>
+            <div style="white-space:pre-wrap">${esc(a.work_answer || '(rasm yuborilgan)')}</div>
+            ${a.work_image ? `<img src="${a.work_image}" alt="ish" style="max-width:220px;border-radius:9px;margin-top:9px;display:block" />` : ''}
+            ${a.teacher_note ? `<div style="margin-top:9px;padding-top:9px;border-top:1px solid var(--border)">
+              <span class="muted">O'qituvchi:</span> ${esc(a.teacher_note)}</div>` : ''}
+          </div>` : ''}
+
+        ${st !== 'accepted' ? `
+          <div style="margin-top:11px;">
+            <textarea class="textarea" id="wa-${a.id}" style="min-height:70px"
+              placeholder="${st === 'rework' ? 'Tuzatilgan javobingizni yozing…' : 'Javobingizni yozing…'}"></textarea>
+            <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; align-items:center;">
+              <input type="file" id="wf-${a.id}" accept="image/*" hidden onchange="rasmTanla(${a.id}, event)" />
+              <button class="btn btn-ghost btn-sm" onclick="document.getElementById('wf-${a.id}').click()">
+                <svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> Daftar rasmi
+              </button>
+              <span class="small muted" id="wn-${a.id}"></span>
+              <button class="btn btn-primary btn-sm" style="margin-left:auto" onclick="ishTopshir(${a.id})">
+                ${st === 'rework' ? 'Qayta topshirish' : 'Topshirish'}
+              </button>
+            </div>
+          </div>` : ''}
+      </div>`;
+    }).join('') : '<div class="empty">Hozircha vazifa yo\'q</div>';
+  }
+
+  // Daftar rasmini tanlash (kichraytiriladi)
+  const WORK_IMG = {};
+  async function rasmTanla(id, e) {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    try {
+      WORK_IMG[id] = await resizeImageToDataURL(f, 900);
+      document.getElementById('wn-' + id).textContent = '✓ rasm tayyor';
+    } catch (err) { toast(err.message, false); }
+    e.target.value = '';
+  }
+
+  async function ishTopshir(id) {
+    const ta = document.getElementById('wa-' + id);
+    const answer = (ta.value || '').trim();
+    const image = WORK_IMG[id] || null;
+    if (!answer && !image) return toast('Javob yozing yoki rasm yuklang', false);
+    try { await api.post('/api/assignments/' + id + '/work', { answer, image }); }
+    catch (e) { return toast(e.message, false); }
+    delete WORK_IMG[id];
+    toast('Topshirildi — o\'qituvchi tekshiradi');
+    loadAll();
+  }
+
+</script>
+</body>
+</html>

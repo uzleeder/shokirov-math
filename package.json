@@ -1,0 +1,26 @@
+{
+  "name": "shokirov-math-academy",
+  "version": "1.0.0",
+  "description": "Shokirov Math Academy — landing, ariza tizimi, o'qituvchi/talaba/direktor panellari",
+  "private": true,
+  "scripts": {
+    "dev": "node server/local.js",
+    "start": "node server/local.js",
+    "extract": "node tools/extract-dtm.js",
+    "import": "node tools/import-dtm.js",
+    "bump": "node tools/bump-assets.js",
+    "deploy": "node tools/bump-assets.js && vercel --prod --yes"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.4",
+    "pdf-parse": "^2.4.5"
+  }
+}

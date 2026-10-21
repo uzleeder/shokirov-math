@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<title>O'qituvchi paneli — Shokirov Math Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/app.css?v=38c188e7" />
+</head>
+<body>
+<header class="app-header">
+  <div class="container wide bar">
+    <a href="index.html" class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5 L8 6.5 L13 12 L8 17.5 L17 17.5"/></svg></span><span>Shokirov Math<small>O'qituvchi paneli</small></span></a>
+    <div class="header-actions">
+      <span class="header-avatar" id="headerAvatar" title="Profil" onclick="switchTab('profile')" style="cursor:pointer;"></span>
+      <span class="badge new" id="whoami" style="display:none"></span>
+      <div class="bil-wrap">
+        <button class="icon-btn" id="bilBtn" aria-label="Bildirishnomalar">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span id="bilDot" style="display:none"></span>
+        </button>
+        <div class="bil-panel" id="bilPanel">
+          <div class="hd">
+            <b>Bildirishnomalar</b>
+            <button onclick="bilHammasi()">Hammasini o'qildi</button>
+          </div>
+          <div class="bil-list" id="bilList"><div class="empty">Yuklanmoqda…</div></div>
+        </div>
+      </div>
+      <button class="icon-btn" onclick="toggleTheme()" aria-label="Rejim">
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-sm" onclick="signOut()">Chiqish</button>
+    </div>
+  </div>
+</header>
+
+<main class="container wide page">
+  <div class="page-head">
+    <h1>Boshqaruv paneli</h1>
+    <p class="muted">Arizalarni ko'ring, talabalarga baho, feedback va vazifa bering.</p>
+  </div>
+
+  <div class="shell">
+  <nav class="tabs" aria-label="Bo'limlar">
+    <button class="tab active" data-tab="dash" data-mobil="Bosh" onclick="switchTab('dash')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg> Dashboard</button>
+    <button class="tab" data-tab="attend" onclick="switchTab('attend')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Davomat</button>
+    <button class="tab" data-tab="pay" onclick="switchTab('pay')"><svg class="i" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> To'lovlar</button>
+    <button class="tab" data-tab="chat" data-mobil="Xabar" onclick="switchTab('chat')"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Xabarlar <span id="chatDot"></span></button>
+    <button class="tab" data-tab="work" data-mobil="Vazifa" onclick="switchTab('work')"><svg class="i" viewBox="0 0 24 24"><path d="M9 3h6a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M9 13l2 2 4-4"/></svg> Vazifa tekshirish <span id="workDot"></span></button>
+    <button class="tab" data-tab="exams" onclick="switchTab('exams')"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Imtihonlar</button>
+    <button class="tab" data-tab="cal" onclick="switchTab('cal')"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg> Jadval</button>
+    <button class="tab" data-tab="cert" onclick="switchTab('cert')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> Sertifikatlar</button>
+    <button class="tab" data-tab="apps" onclick="switchTab('apps')"><svg class="i" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.5 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.5A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.5z"/></svg> Arizalar <span id="appsCount"></span></button>
+    <button class="tab" data-tab="students" data-mobil="Talaba" onclick="switchTab('students')"><svg class="i" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> Talabalar <span id="studCount"></span></button>
+  </nav>
+
+  <div class="panes">
+
+  <!-- DASHBOARD -->
+  <section id="tab-dash" class="tab-panel active">
+    <div id="dashView"><div class="empty">Yuklanmoqda…</div></div>
+  </section>
+
+  <!-- DAVOMAT -->
+  <section id="tab-attend" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:16px;">
+        <div>
+          <div class="section-title">Davomat belgilash</div>
+          <p class="muted small">Kunni tanlang va har bir talaba uchun holatni belgilang</p>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <input class="input" type="date" id="attDay" style="max-width:170px" onchange="loadAttDay()" />
+          <button class="btn btn-ghost btn-sm" onclick="markAllPresent()">Hammasi keldi</button>
+        </div>
+      </div>
+      <div id="attDayList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- TO'LOVLAR -->
+  <section id="tab-pay" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:16px;">
+        <div>
+          <div class="section-title">Oylik to'lovlar</div>
+          <p class="muted small">Kim to'ladi, kim to'lamadi</p>
+        </div>
+        <input class="input" type="month" id="payMonth" style="max-width:180px" onchange="loadPayMonth()" />
+      </div>
+      <div id="payList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- XABARLAR -->
+  <section id="tab-chat" class="tab-panel">
+    <div class="split">
+      <div class="card">
+        <div class="spread" style="margin-bottom:12px;">
+          <div class="section-title">Suhbatlar</div>
+          <button class="btn btn-ghost btn-sm" onclick="loadThreads()" title="Yangilash"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg></button>
+        </div>
+        <div id="threadList"><div class="empty">Yuklanmoqda…</div></div>
+      </div>
+
+      <div id="chatPane">
+        <div class="card"><div class="empty">Chapdan talabani tanlang</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VAZIFA TEKSHIRISH -->
+  <section id="tab-work" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:16px;">
+        <div>
+          <div class="section-title">Topshirilgan vazifalar</div>
+          <p class="muted small">Talabalar javobini ko'rib, qabul qiling yoki qayta ishlashga qaytaring</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadWorks()"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg> Yangilash</button>
+      </div>
+      <div id="workList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- SERTIFIKATLAR -->
+  <section id="tab-exams" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:14px;">Yangi imtihon</div>
+      <div class="form-row">
+        <div style="flex:2 1 200px;"><label>Sarlavha</label><input class="input" id="imNom" placeholder="Chorak nazorati" /></div>
+        <div style="min-width:160px;"><label>Kurs</label><select class="input" id="imKurs"><option value="">Barcha talabalar</option></select></div>
+        <div style="max-width:130px;"><label>Davomiyligi (daq)</label><input class="input" id="imVaqt" type="number" min="1" max="600" placeholder="45" /></div>
+        <button class="btn btn-primary" onclick="imtihonYarat()">Yaratish</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <div class="section-title" style="margin-bottom:14px;">Imtihonlar</div>
+      <div id="imList"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <section id="tab-cal" class="tab-panel">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:14px;">Haftalik dars jadvali</div>
+      <div class="form-row" style="gap:8px; flex-wrap:wrap; align-items:flex-end;">
+        <div style="min-width:150px;"><label>Hafta kuni</label><select class="input" id="jKun"></select></div>
+        <div style="max-width:110px;"><label>Boshlanish</label><input class="input" id="jBosh" type="time" value="15:00" /></div>
+        <div style="max-width:110px;"><label>Tugash</label><input class="input" id="jTugash" type="time" value="16:30" /></div>
+        <div style="min-width:170px;"><label>Kurs (ixtiyoriy)</label><select class="input" id="jKurs"><option value="">Umumiy</option></select></div>
+        <div style="max-width:120px;"><label>Xona</label><input class="input" id="jXona" placeholder="1-xona" /></div>
+        <button class="btn btn-primary" onclick="jadvalQosh()">Qo'shish</button>
+      </div>
+      <div id="jadvalList" style="margin-top:16px;"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <div class="spread" style="margin-bottom:14px;">
+        <div class="section-title">Kalendar</div>
+        <input class="input" type="month" id="kalOy" style="max-width:170px" onchange="loadKal()" />
+      </div>
+      <div class="form-row" style="gap:8px; flex-wrap:wrap; align-items:flex-end;">
+        <div style="flex:1; min-width:170px;"><label>Sarlavha</label><input class="input" id="hNom" placeholder="Nazorat ishi" /></div>
+        <div style="min-width:140px;"><label>Turi</label><select class="input" id="hTur">
+          <option value="exam">Imtihon</option><option value="lesson">Dars</option>
+          <option value="event">Tadbir</option><option value="holiday">Dam olish</option></select></div>
+        <div style="max-width:150px;"><label>Sana</label><input class="input" id="hSana" type="date" /></div>
+        <div style="max-width:150px;"><label>Tugash (ixtiyoriy)</label><input class="input" id="hOxir" type="date" /></div>
+        <div style="max-width:110px;"><label>Vaqt</label><input class="input" id="hVaqt" type="time" /></div>
+        <button class="btn btn-primary" onclick="hodisaQosh()">Qo'shish</button>
+      </div>
+      <div id="kalBox" style="margin-top:16px;"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <section id="tab-cert" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:16px;">
+        <div>
+          <div class="section-title">Sertifikat berish</div>
+          <p class="muted small">Kurs muddati tugagan talabalarga sertifikat raqamini yozib tasdiqlang</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadCertPending()"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg> Yangilash</button>
+      </div>
+      <div id="certPending"><div class="empty">Yuklanmoqda…</div></div>
+    </div>
+  </section>
+
+  <!-- ARIZALAR -->
+  <section id="tab-apps" class="tab-panel">
+    <div class="card">
+      <div class="spread" style="margin-bottom:14px;">
+        <div class="section-title">Kelib tushgan arizalar</div>
+        <button class="btn btn-ghost btn-sm" onclick="loadApps()"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg> Yangilash</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sana</th><th>Ism</th><th>Telefon</th><th>Sinf</th><th>Xabar</th><th>Holat</th><th></th></tr></thead>
+          <tbody id="appsBody"><tr><td colspan="7" class="empty">Yuklanmoqda…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALABALAR -->
+  <section id="tab-students" class="tab-panel">
+    <div class="split">
+      <div class="card">
+        <div class="spread" style="margin-bottom:12px;">
+          <div class="section-title">Talabalar</div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="openNewStudent()"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11h6M20 8v6"/></svg> Talaba qo'shish</button>
+            <button class="btn btn-ghost btn-sm" onclick="loadStudents()" title="Yangilash"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg></button>
+          </div>
+        </div>
+        <input class="input" id="studSearch" placeholder="🔎 Qidirish…" oninput="renderPeople()" style="margin-bottom:12px;" />
+        <div class="people" id="peopleList"><div class="empty">Yuklanmoqda…</div></div>
+      </div>
+
+      <div id="studentDetail">
+        <div class="card"><div class="empty">Chapdan talabani tanlang</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFIL -->
+  <section id="tab-profile" class="tab-panel">
+    <div class="card" style="max-width:680px;">
+      <div class="section-title" style="margin-bottom:4px;">Profil sozlamalari</div>
+      <p class="muted small" style="margin-bottom:22px;">Rasm, ism, login (email) va parolingizni o'zgartirishingiz mumkin.</p>
+
+      <div class="avatar-edit">
+        <div class="avatar-big" id="avatarPreview"></div>
+        <div class="avatar-actions">
+          <input type="file" id="avatarFile" accept="image/*" hidden onchange="pickAvatar(event)" />
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('avatarFile').click()">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v13"/></svg> Rasm tanlash
+          </button>
+          <button class="btn btn-ghost btn-sm" id="avatarDelBtn" onclick="removeAvatar()" style="display:none;">
+            <svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg> O'chirish
+          </button>
+          <p class="muted small" style="margin-top:2px;">JPG yoki PNG · avtomatik kichraytiriladi</p>
+        </div>
+      </div>
+
+      <form onsubmit="return saveProfile(event)" style="margin-top:24px;">
+        <div class="row2">
+          <div class="field"><label>Ism familiya</label><input class="input" id="pf_name" required /></div>
+          <div class="field"><label>Telefon</label><input class="input" id="pf_phone" placeholder="90 123 45 67" /></div>
+        </div>
+        <div class="field"><label>Email (login)</label><input class="input" type="email" id="pf_email" required /></div>
+
+        <div class="section-title" style="font-size:16px; margin:22px 0 10px;">Parolni o'zgartirish</div>
+        <div class="row2">
+          <div class="field"><label>Yangi parol</label><input class="input" type="password" id="pf_pass" placeholder="Bo'sh qoldirsangiz — o'zgarmaydi" /></div>
+          <div class="field"><label>Parolni takrorlang</label><input class="input" type="password" id="pf_pass2" placeholder="••••••••" /></div>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="pf_btn" style="margin-top:8px;">Saqlash</button>
+      </form>
+    </div>
+  </section>
+  </div>
+  </div>
+</main>
+
+<!-- Talabaga login berish oynasi -->
+<div class="modal-overlay" id="acctModal">
+  <div class="modal">
+    <h3>Talabaga login berish</h3>
+    <p class="muted small" id="acctFor" style="margin-bottom:16px;"></p>
+    <form id="acctForm" onsubmit="return createStudent(event)">
+      <div class="row2">
+        <div class="field"><label>Familiya</label><input class="input" id="ac_last" required /></div>
+        <div class="field"><label>Ism</label><input class="input" id="ac_first" required /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Otasining ismi</label><input class="input" id="ac_middle" /></div>
+        <div class="field"><label>Tug'ilgan sana</label><input class="input" type="date" id="ac_birth" /></div>
+      </div>
+      <div class="field"><label>Telefon</label><input class="input" id="ac_phone" /></div>
+      <div class="field"><label>Email (login)</label><input class="input" type="email" id="ac_email" required placeholder="talaba@shokirov.uz" /></div>
+      <div class="field"><label>Parol</label>
+        <div class="row-gen">
+          <input class="input" id="ac_pass" required />
+          <button type="button" class="btn btn-ghost btn-sm" onclick="genPass()" title="Parol yaratish"><svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Kurslarga biriktirish (ixtiyoriy)</label>
+        <div id="ac_courses" class="pick-list"></div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-ghost btn-block" onclick="closeModal()">Bekor</button>
+        <button type="submit" class="btn btn-primary btn-block" id="ac_btn">Yaratish</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js?v=38c188e7"></script>
+<script>
+  let ME = null, STUDENTS = [], SELECTED = null, APPS = [], CURRENT_APP = null, COURSES = [];
+
+  // ---- Talabaga login berish (modal) ----
+  function genPass() {
+    const chars = 'abcdefghjkmnpqrstuvwxyz23456789';
+    let p = ''; for (let i = 0; i < 8; i++) p += chars[Math.floor(Math.random() * chars.length)];
+    document.getElementById('ac_pass').value = p;
+  }
+  function suggestEmail(name) {
+    const base = (name || 'talaba').toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '') || 'talaba';
+    return base + Math.floor(10 + Math.random() * 89) + '@shokirov.uz';
+  }
+  function openAccept(appId) {
+    const a = APPS.find(x => x.id === Number(appId));
+    if (!a) return;
+    CURRENT_APP = a.id;
+    document.getElementById('acctFor').textContent = 'Ariza: ' + (a.full_name || '') + ' · ' + (a.phone || '');
+    document.getElementById('ac_last').value = a.last_name || '';
+    document.getElementById('ac_first').value = a.first_name || a.full_name || '';
+    document.getElementById('ac_middle').value = a.middle_name || '';
+    document.getElementById('ac_birth').value = a.birth_date ? String(a.birth_date).slice(0, 10) : '';
+    document.getElementById('ac_phone').value = a.phone || '';
+    document.getElementById('ac_email').value = suggestEmail((a.first_name || '') + '.' + (a.last_name || a.full_name || ''));
+    renderCoursePicks();
+    genPass();
+    document.getElementById('ac_btn').textContent = 'Qabul qilib login berish';
+    document.getElementById('acctModal').classList.add('open');
+  }
+  function openNewStudent() {
+    CURRENT_APP = null;
+    document.getElementById('acctFor').textContent = 'Yangi talaba akkaunti';
+    ['ac_last','ac_first','ac_middle','ac_birth','ac_phone'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ac_email').value = '';
+    genPass();
+    renderCoursePicks();
+    document.getElementById('ac_btn').textContent = 'Yaratish';
+    document.getElementById('acctModal').classList.add('open');
+  }
+
+  // Modaldagi kurs tanlash ro'yxati
+  function renderCoursePicks() {
+    const box = document.getElementById('ac_courses');
+    if (!box) return;
+    box.innerHTML = COURSES.length
+      ? COURSES.map(c => `<label>
+          <input type="checkbox" value="${c.id}" />
+          ${esc(c.title)}<span>${esc(c.duration || '')}</span>
+        </label>`).join('')
+      : '<div class="empty small">Kurslar yuklanmadi</div>';
+  }
+  function closeModal() { document.getElementById('acctModal').classList.remove('open'); }
+
+  async function createStudent(e) {
+    e.preventDefault();
+    const btn = document.getElementById('ac_btn');
+    const email = document.getElementById('ac_email').value.trim();
+    const password = document.getElementById('ac_pass').value.trim();
+    btn.disabled = true; const old = btn.textContent; btn.textContent = 'Yaratilmoqda…';
+    const tanlangan = [...document.querySelectorAll('#ac_courses input:checked')].map(x => parseInt(x.value, 10));
+    let created;
+    try {
+      created = await api.post('/api/students', {
+        last_name: document.getElementById('ac_last').value.trim(),
+        first_name: document.getElementById('ac_first').value.trim(),
+        middle_name: document.getElementById('ac_middle').value.trim() || null,
+        birth_date: document.getElementById('ac_birth').value || null,
+        phone: document.getElementById('ac_phone').value.trim(),
+        email, password,
+        application_id: CURRENT_APP
+      });
+    } catch (err) { btn.disabled = false; btn.textContent = old; return toast(err.message, false); }
+
+    // Tanlangan kurslarga darhol biriktirish
+    const biriktirilgan = [];
+    for (const cid of tanlangan) {
+      try {
+        await api.post('/api/enrollments', { student_id: created.id, course_id: cid });
+        const c = COURSES.find(x => x.id === cid);
+        if (c) biriktirilgan.push(c.title);
+      } catch (e) {}
+    }
+
+    closeModal();
+    btn.disabled = false;
+    alert("✅ Talaba akkaunti yaratildi!\n\nBu ma'lumotlarni talabaga bering:\n\nLogin (email): " + email
+      + "\nParol: " + password
+      + (biriktirilgan.length ? "\n\nBiriktirilgan kurslar:\n· " + biriktirilgan.join("\n· ") : ""));
+    loadApps(); loadStudents(); loadDash();
+  }
+
+  (async () => {
+    ME = await guard('teacher');
+    if (!ME) return;
+    bilInit();
+    mobilNavQur();
+    const w = document.getElementById('whoami');
+    w.style.display = ''; w.textContent = (ME.full_name || 'O\'qituvchi');
+    renderProfile();
+    belgiYangila();
+    loadWorks();
+    try { COURSES = await api.get('/api/courses'); } catch (e) { COURSES = []; }
+    loadDash();
+    loadApps();
+    loadStudents();
+  })();
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    ['dash','attend','pay','chat','work','exams','cal','cert','apps','students','profile']
+      .forEach(n => document.getElementById('tab-' + n).classList.toggle('active', n === name));
+    const ha = document.getElementById('headerAvatar');
+    if (ha) ha.classList.toggle('on', name === 'profile');
+    if (name === 'dash') loadDash();
+    if (name === 'cert') loadCertPending();
+    if (name === 'chat') loadThreads();
+    if (name === 'work') loadWorks();
+    if (name === 'exams') loadExams();
+    if (name === 'cal') loadCal();
+    if (name === 'attend') { const el = document.getElementById('attDay'); if (!el.value) el.value = today(); loadAttDay(); }
+    if (name === 'pay') { const el = document.getElementById('payMonth'); if (!el.value) el.value = thisMonth(); loadPayMonth(); }
+  }
+
+  const today = () => new Date().toISOString().slice(0, 10);
+  const thisMonth = () => new Date().toISOString().slice(0, 7);
+  const money = n => Number(n || 0).toLocaleString('uz-UZ') + " so'm";
+  const STATUS_UZ = { present: 'Keldi', absent: 'Kelmadi', late: 'Kechikdi', excused: 'Sababli' };
+  const PAY_UZ = { paid: "To'landi", unpaid: "To'lanmagan", partial: 'Qisman' };
+
+  // ==================== DASHBOARD ====================
+  async function loadDash() {
+    const V = document.getElementById('dashView');
+    let d;
+    try { d = await api.get('/api/dashboard/teacher'); }
+    catch (e) { V.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    const t = d.totals;
+
+    const rows = d.students.map(s => {
+      const acc = s.attempted ? Math.round(s.correct / s.attempted * 100) : 0;
+      const att = s.att_total ? Math.round(s.att_present / s.att_total * 100) : null;
+      const holat = !s.attempted ? { t: "O'qimayapti", c: 'bad' }
+        : acc >= 80 ? { t: "A'lo", c: 'good' }
+        : acc >= 60 ? { t: 'Yaxshi', c: 'warn' } : { t: 'Sust', c: 'bad' };
+      return `<tr>
+        <td><b>${esc(s.full_name || 'Ismsiz')}</b><div class="small muted">${esc(s.phone || '—')}</div></td>
+        <td>${s.attempted}<div class="small muted">${s.correct} to'g'ri</div></td>
+        <td><span class="grade-pill ${acc >= 80 ? 'good' : acc >= 60 ? 'mid' : 'low'}">${acc}%</span></td>
+        <td>${att === null ? '<span class="muted small">—</span>' : `<span class="grade-pill ${att >= 80 ? 'good' : att >= 60 ? 'mid' : 'low'}">${att}%</span>`}</td>
+        <td><span class="pay-pill ${s.pay_status}">${PAY_UZ[s.pay_status]}</span></td>
+        <td><span class="badge ${holat.c === 'good' ? 'accepted' : holat.c === 'warn' ? 'new' : 'rejected'}">${holat.t}</span></td>
+        <td class="small muted">${s.last_activity ? fmtDate(s.last_activity) : '—'}</td>
+      </tr>`;
+    }).join('');
+
+    V.innerHTML = `
+      <div class="stats" style="margin-bottom:18px;">
+        <div class="stat-card accent"><div class="lab">Talabalar</div><div class="val">${t.students}</div></div>
+        <div class="stat-card good"><div class="lab">To'lagan</div><div class="val">${t.paid}</div><div class="sub">${d.period}</div></div>
+        <div class="stat-card ${t.unpaid ? 'bad' : 'good'}"><div class="lab">To'lamagan</div><div class="val">${t.unpaid}</div><div class="sub">${d.period}</div></div>
+        <div class="stat-card good"><div class="lab">Faol</div><div class="val">${t.active}</div><div class="sub">mashq yechyapti</div></div>
+        <div class="stat-card ${t.inactive ? 'bad' : 'good'}"><div class="lab">O'qimayapti</div><div class="val">${t.inactive}</div></div>
+        <div class="stat-card ${t.new_apps ? 'warn' : ''}"><div class="lab">Yangi ariza</div><div class="val">${t.new_apps}</div></div>
+      </div>
+      <div id="resetBox"></div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="spread">
+          <div>
+            <div class="section-title" style="margin:0;">Tezkor amallar</div>
+            <p class="muted small">Yangi talabaga login yaratish yoki kunlik ishlar</p>
+          </div>
+          <div style="display:flex; gap:9px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="openNewStudent()">
+              <svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11h6M20 8v6"/></svg> Talaba qo'shish
+            </button>
+            <button class="btn btn-ghost" onclick="switchTab('attend')">Davomat belgilash</button>
+            <button class="btn btn-ghost" onclick="switchTab('pay')">To'lov qayd qilish</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="spread" style="margin-bottom:12px;">
+          <div>
+            <div class="section-title" style="margin:0;">Hisobotlar</div>
+            <p class="muted small">Excel'da ochiladigan fayl (CSV) sifatida yuklab oling</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:9px; flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm" onclick="yuklab('/api/export/students.csv','talabalar.csv')">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Talabalar
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="yuklab('/api/export/attendance.csv','davomat.csv')">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Davomat
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="yuklab('/api/export/payments.csv','tolovlar.csv')">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> To'lovlar
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="yuklab('/api/export/grades.csv','baholar.csv')">
+            <svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Baholar
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="spread" style="margin-bottom:12px;">
+          <div>
+            <div class="section-title" style="margin:0;">Talaba fikrlari</div>
+            <p class="muted small">Saytning bosh sahifasida ko'rinadi. Bo'sh bo'lsa — bo'lim umuman chiqmaydi.</p>
+          </div>
+        </div>
+        <div class="form-row" style="gap:8px;">
+          <div style="min-width:150px;"><label>Ism</label><input class="input" id="fkIsm" placeholder="Aziza Karimova" /></div>
+          <div style="min-width:150px;"><label>Kim (ixtiyoriy)</label><input class="input" id="fkRol" placeholder="11-sinf o'quvchisi" /></div>
+        </div>
+        <div style="margin-top:10px;">
+          <label class="small muted" style="display:block; margin-bottom:6px;">Fikri</label>
+          <textarea class="textarea" id="fkMatn" rows="3" placeholder="O'quvchi yoki ota-onaning o'z so'zlari bilan…"></textarea>
+        </div>
+        <div style="display:flex; gap:9px; margin-top:10px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="fikrQosh()">Qo'shish</button>
+        </div>
+        <div id="fikrList" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:14px;">Talabalar holati</div>
+        ${d.students.length ? `<div class="table-wrap"><table>
+          <thead><tr><th>Talaba</th><th>Mashq</th><th>Aniqlik</th><th>Davomat</th><th>To'lov</th><th>Baho</th><th>Oxirgi faollik</th></tr></thead>
+          <tbody>${rows}</tbody></table></div>` : '<div class="empty">Hali talaba yo\'q</div>'}
+      </div>`;
+
+    // Diqqat: #resetBox va #fikrList shu HTML ichida qayta yaratiladi —
+    // shuning uchun ularni undan keyin to'ldiramiz
+    loadResets();
+    loadFikrlar();
+  }
+
+  // ==================== DAVOMAT ====================
+  async function loadAttDay() {
+    const box = document.getElementById('attDayList');
+    const day = document.getElementById('attDay').value || today();
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d;
+    try { d = await api.get('/api/attendance/day?day=' + day); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!d.rows.length) { box.innerHTML = '<div class="empty">Talaba yo\'q</div>'; return; }
+    box.innerHTML = `<div class="stack">${d.rows.map(s => `
+      <div class="item"><div class="top">
+        <div><b>${esc(s.full_name || 'Ismsiz')}</b><div class="small muted">${esc(s.phone || '—')}</div></div>
+        <div class="seg">
+          ${['present','late','excused','absent'].map(st =>
+            `<button class="${s.status === st ? 'on' : ''}" onclick="setAtt(${s.student_id},'${st}')">${STATUS_UZ[st]}</button>`).join('')}
+        </div>
+      </div></div>`).join('')}</div>`;
+  }
+
+  async function setAtt(studentId, status) {
+    const day = document.getElementById('attDay').value || today();
+    try { await api.post('/api/attendance', { student_id: studentId, day, status }); }
+    catch (e) { return toast(e.message, false); }
+    toast(STATUS_UZ[status] + ' — belgilandi');
+    loadAttDay();
+  }
+
+  async function markAllPresent() {
+    const day = document.getElementById('attDay').value || today();
+    if (!confirm(fmtDate(day) + ' — barcha talabalarni "Keldi" deb belgilaysizmi?')) return;
+    let d;
+    try { d = await api.get('/api/attendance/day?day=' + day); } catch (e) { return toast(e.message, false); }
+    for (const s of d.rows) {
+      try { await api.post('/api/attendance', { student_id: s.student_id, day, status: 'present' }); } catch (e) {}
+    }
+    toast('Barchasi belgilandi'); loadAttDay();
+  }
+
+  // ==================== TALABA FIKRLARI (landing sahifa) ====================
+  async function loadFikrlar() {
+    const box = document.getElementById('fikrList');
+    if (!box) return;
+    let rows;
+    try { rows = await api.get('/api/testimonials/all'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    if (!rows.length) { box.innerHTML = '<div class="empty">Hali fikr qo\'shilmagan</div>'; return; }
+    box.innerHTML = `<div class="stack">${rows.map(f => `
+      <div class="item">
+        <div class="top">
+          <div>
+            <h4>${esc(f.name)}${f.role ? ` <span class="small muted">· ${esc(f.role)}</span>` : ''}</h4>
+            <div class="small" style="margin-top:5px;">${esc(f.text)}</div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="pay-pill ${f.published ? 'paid' : 'unpaid'}">${f.published ? 'Saytda' : 'Yashirin'}</span>
+            <button class="btn btn-ghost btn-sm" onclick="fikrKorsat(${f.id}, ${!f.published})">${f.published ? 'Yashirish' : "Ko'rsatish"}</button>
+            <button class="xbtn" onclick="fikrOchir(${f.id})" title="O'chirish">×</button>
+          </div>
+        </div>
+      </div>`).join('')}</div>`;
+  }
+
+  async function fikrQosh() {
+    const b = {
+      name: document.getElementById('fkIsm').value.trim(),
+      role: document.getElementById('fkRol').value.trim() || null,
+      text: document.getElementById('fkMatn').value.trim()
+    };
+    if (!b.name) return toast('Ismni yozing', false);
+    if (!b.text) return toast('Fikr matnini yozing', false);
+    try { await api.post('/api/testimonials', b); } catch (e) { return toast(e.message, false); }
+    toast('Qo\'shildi — saytda ko\'rinadi');
+    ['fkIsm', 'fkRol', 'fkMatn'].forEach(id => document.getElementById(id).value = '');
+    loadFikrlar();
+  }
+
+  async function fikrKorsat(id, published) {
+    try { await api.patch('/api/testimonials/' + id, { published }); } catch (e) { return toast(e.message, false); }
+    toast(published ? 'Saytda ko\'rinadi' : 'Saytdan yashirildi');
+    loadFikrlar();
+  }
+
+  async function fikrOchir(id) {
+    if (!confirm('Bu fikrni butunlay o\'chirasizmi?')) return;
+    try { await api.del('/api/testimonials/' + id); } catch (e) { return toast(e.message, false); }
+    toast('O\'chirildi'); loadFikrlar();
+  }
+
+  // ==================== IMTIHONLAR ====================
+  const IM_UZ  = { draft: 'Qoralama', soon: 'Boshlanmagan', open: 'Ochiq', closed: 'Yopilgan' };
+  const IM_CLS = { draft: 'unpaid', soon: 'partial', open: 'paid', closed: 'unpaid' };
+  let IM_OCHIQ = null;   // ochilgan imtihon id'si
+
+  async function loadExams() {
+    const sel = document.getElementById('imKurs');
+    if (sel && sel.options.length <= 1) {
+      try {
+        const cs = await api.get('/api/courses');
+        sel.innerHTML = '<option value="">Barcha talabalar</option>' +
+          cs.map(c => `<option value="${c.id}">${esc(c.title)}</option>`).join('');
+      } catch (e) {}
+    }
+    const box = document.getElementById('imList');
+    let rows;
+    try { rows = await api.get('/api/exams'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!rows.length) { box.innerHTML = '<div class="empty">Hali imtihon yaratilmagan</div>'; return; }
+
+    box.innerHTML = `<div class="stack">${rows.map(e => `
+      <div class="item">
+        <div class="top">
+          <div>
+            <h4>${esc(e.title)}</h4>
+            <div class="small muted">
+              ${esc(e.course_name || 'Barcha talabalar')} ·
+              ${e.savollar} savol ·
+              ${e.duration_min ? e.duration_min + ' daqiqa' : 'vaqt cheklovsiz'} ·
+              ${e.topshirganlar} kishi topshirgan
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="pay-pill ${IM_CLS[e.holat]}">${IM_UZ[e.holat]}</span>
+            <button class="btn btn-ghost btn-sm" onclick="imOch(${e.id})">Savollar</button>
+            ${e.topshirganlar ? `<button class="btn btn-ghost btn-sm" onclick="imNatija(${e.id})">Natijalar</button>` : ''}
+            <button class="btn ${e.published ? 'btn-ghost' : 'btn-success'} btn-sm"
+                    onclick="imElon(${e.id}, ${!e.published})">${e.published ? 'Yashirish' : "E'lon qilish"}</button>
+            <button class="xbtn" onclick="imOchir(${e.id})" title="O'chirish">×</button>
+          </div>
+        </div>
+        <div id="imBody-${e.id}"></div>
+      </div>`).join('')}</div>`;
+    if (IM_OCHIQ && document.getElementById('imBody-' + IM_OCHIQ)) imOch(IM_OCHIQ);
+  }
+
+  async function imtihonYarat() {
+    const b = {
+      title: document.getElementById('imNom').value.trim(),
+      course_id: +document.getElementById('imKurs').value || null,
+      duration_min: document.getElementById('imVaqt').value || null
+    };
+    if (!b.title) return toast('Sarlavhani yozing', false);
+    let r;
+    try { r = await api.post('/api/exams', b); } catch (e) { return toast(e.message, false); }
+    toast('Yaratildi — endi savol qo\'shing');
+    document.getElementById('imNom').value = '';
+    IM_OCHIQ = r.id;
+    loadExams();
+  }
+
+  // Savollar bo'limini ochish/yopish
+  async function imOch(id) {
+    const box = document.getElementById('imBody-' + id);
+    if (!box) return;
+    if (IM_OCHIQ === id && box.innerHTML.trim()) { box.innerHTML = ''; IM_OCHIQ = null; return; }
+    IM_OCHIQ = id;
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+
+    let d, kurslar = [];
+    try { [d, kurslar] = await Promise.all([api.get('/api/exams/' + id), api.get('/api/courses')]); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    box.innerHTML = `
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+        <div class="form-row" style="margin-bottom:12px;">
+          <div style="min-width:170px;"><label>Kitobdan savol tortish</label>
+            <select class="input" id="imMavzu-${id}"><option value="">Yuklanmoqda…</option></select></div>
+          <div style="max-width:100px;"><label>Nechta</label>
+            <input class="input" id="imSoni-${id}" type="number" min="1" max="50" value="10" /></div>
+          <button class="btn btn-primary btn-sm" onclick="imToldir(${id})">Qo'shish</button>
+        </div>
+        <details style="margin-bottom:12px;">
+          <summary class="small muted" style="cursor:pointer;">Yoki savolni qo'lda yozish</summary>
+          <div style="margin-top:10px;">
+            <input class="input" id="imQ-${id}" placeholder="Savol matni" style="margin-bottom:8px;" />
+            <div class="form-row" style="gap:6px;">
+              ${['A','B','C','D'].map(L => `<div style="min-width:90px;"><label>${L}</label>
+                <input class="input" id="imO${L}-${id}" placeholder="variant" /></div>`).join('')}
+              <div style="max-width:90px;"><label>To'g'ri</label>
+                <select class="input" id="imT-${id}">${['A','B','C','D'].map(L => `<option>${L}</option>`).join('')}</select></div>
+              <button class="btn btn-primary btn-sm" onclick="imSavolQosh(${id})">Qo'shish</button>
+            </div>
+          </div>
+        </details>
+        <div id="imQs-${id}"></div>
+      </div>`;
+
+    // Mavzular ro'yxati — imtihon kursidan, kurs ko'rsatilmagan bo'lsa hammasidan
+    const sel = document.getElementById('imMavzu-' + id);
+    const kerakli = d.exam.course_id ? kurslar.filter(c => c.id === d.exam.course_id) : kurslar;
+    let opts = '';
+    for (const c of kerakli) {
+      try {
+        const tj = await api.get('/api/courses/' + c.id + '/topics');
+        const ms = (tj && tj.topics) || [];
+        if (ms.length) opts += `<optgroup label="${esc(c.title)}">` +
+          ms.map(m => `<option value="${m.id}">${esc(m.title)}</option>`).join('') + '</optgroup>';
+      } catch (e) {}
+    }
+    sel.innerHTML = opts || '<option value="">Bu kursda kitob yuklanmagan</option>';
+    imSavollarChiz(id, d.questions);
+  }
+
+  function imSavollarChiz(id, qs) {
+    const box = document.getElementById('imQs-' + id);
+    if (!box) return;
+    if (!qs.length) { box.innerHTML = '<div class="empty">Savol yo\'q</div>'; return; }
+    const jami = qs.reduce((s, q) => s + Number(q.score), 0);
+    box.innerHTML = `<div class="small muted" style="margin-bottom:8px;">${qs.length} savol · jami ${jami} ball</div>` +
+      `<div class="stack">${qs.map((q, i) => `
+        <div class="item" style="padding:11px 13px;">
+          <div class="top">
+            <div style="flex:1; min-width:0;">
+              <div class="small"><b>${i + 1}.</b> ${esc(q.prompt).slice(0, 220)}</div>
+              ${q.options ? `<div class="small muted" style="margin-top:5px;">${
+                Object.entries(typeof q.options === 'string' ? JSON.parse(q.options) : q.options)
+                  .map(([L, v]) => `${L === q.answer_letter ? '<b style="color:var(--success)">' : ''}${L}) ${esc(v)}${L === q.answer_letter ? '</b>' : ''}`)
+                  .join(' &nbsp; ')}</div>` : `<div class="small muted" style="margin-top:5px;">To'g'ri javob: <b>${esc(q.answer_letter)}</b></div>`}
+            </div>
+            <button class="xbtn" onclick="imSavolOchir(${q.id}, ${id})" title="O'chirish">×</button>
+          </div>
+        </div>`).join('')}</div>`;
+  }
+
+  async function imToldir(id) {
+    const b = {
+      topic_id: +document.getElementById('imMavzu-' + id).value || null,
+      count: +document.getElementById('imSoni-' + id).value || 10
+    };
+    if (!b.topic_id) return toast('Mavzuni tanlang', false);
+    let r;
+    try { r = await api.post('/api/exams/' + id + '/fill', b); } catch (e) { return toast(e.message, false); }
+    toast(r.qoshildi + ' ta savol qo\'shildi');
+    const d = await api.get('/api/exams/' + id);
+    imSavollarChiz(id, d.questions);
+    imSonYangila(id, d.questions.length);
+  }
+
+  async function imSavolQosh(id) {
+    const o = {};
+    for (const L of ['A', 'B', 'C', 'D']) {
+      const v = document.getElementById('imO' + L + '-' + id).value.trim();
+      if (v) o[L] = v;
+    }
+    const b = {
+      prompt: document.getElementById('imQ-' + id).value.trim(),
+      options: Object.keys(o).length ? o : null,
+      answer_letter: document.getElementById('imT-' + id).value
+    };
+    if (!b.prompt) return toast('Savol matnini yozing', false);
+    try { await api.post('/api/exams/' + id + '/questions', b); } catch (e) { return toast(e.message, false); }
+    toast('Savol qo\'shildi');
+    document.getElementById('imQ-' + id).value = '';
+    ['A', 'B', 'C', 'D'].forEach(L => document.getElementById('imO' + L + '-' + id).value = '');
+    const d = await api.get('/api/exams/' + id);
+    imSavollarChiz(id, d.questions);
+    imSonYangila(id, d.questions.length);
+  }
+
+  async function imSavolOchir(qid, id) {
+    try { await api.del('/api/exam-questions/' + qid); } catch (e) { return toast(e.message, false); }
+    const d = await api.get('/api/exams/' + id);
+    imSavollarChiz(id, d.questions);
+    imSonYangila(id, d.questions.length);
+  }
+
+  // Ro'yxatdagi "N savol" yozuvini qayta yuklamasdan yangilaydi
+  function imSonYangila(id, n) {
+    const box = document.getElementById('imBody-' + id);
+    if (!box) return;
+    const info = box.parentElement.querySelector('.small.muted');
+    if (info) info.innerHTML = info.innerHTML.replace(/\d+ savol/, n + ' savol');
+  }
+
+  async function imElon(id, elon) {
+    try { await api.patch('/api/exams/' + id, { published: elon }); }
+    catch (e) { return toast(e.message, false); }
+    toast(elon ? 'E\'lon qilindi — talabalar ko\'radi' : 'Yashirildi');
+    loadExams();
+  }
+
+  async function imOchir(id) {
+    if (!confirm('Imtihon va barcha natijalari o\'chiriladi. Davom etasizmi?')) return;
+    try { await api.del('/api/exams/' + id); } catch (e) { return toast(e.message, false); }
+    if (IM_OCHIQ === id) IM_OCHIQ = null;
+    toast('O\'chirildi'); loadExams();
+  }
+
+  async function imNatija(id) {
+    const box = document.getElementById('imBody-' + id);
+    if (!box) return;
+    IM_OCHIQ = null;
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d;
+    try { d = await api.get('/api/exams/' + id + '/results'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!d.results.length) { box.innerHTML = '<div class="empty">Hali hech kim topshirmagan</div>'; return; }
+
+    const ort = Math.round(d.results.reduce((s, x) => s + x.foiz, 0) / d.results.length);
+    box.innerHTML = `
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+        <div class="small muted" style="margin-bottom:10px;">${d.results.length} kishi topshirdi · o'rtacha ${ort}%</div>
+        ${d.results.map(x => `
+          <div class="rank-row">
+            <span class="rank-no ${x.rank <= 3 ? 'g' + x.rank : ''}">${x.rank}</span>
+            <span class="who">${esc(x.full_name || 'Ismsiz')}</span>
+            <span class="sc"><b>${x.foiz}%</b>${x.score}/${x.max_score}</span>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // ==================== JADVAL VA KALENDAR ====================
+  const KUNLAR = ['', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'];
+  let CAL_TAYYOR = false;
+
+  async function loadCal() {
+    if (!CAL_TAYYOR) {
+      CAL_TAYYOR = true;
+      document.getElementById('jKun').innerHTML =
+        KUNLAR.slice(1).map((k, i) => `<option value="${i + 1}">${k}</option>`).join('');
+      document.getElementById('kalOy').value = new Date().toISOString().slice(0, 7);
+      document.getElementById('hSana').value = new Date().toISOString().slice(0, 10);
+      try {
+        const cs = await api.get('/api/courses');
+        document.getElementById('jKurs').innerHTML =
+          '<option value="">Umumiy</option>' + cs.map(c => `<option value="${c.id}">${esc(c.title)}</option>`).join('');
+      } catch (e) {}
+    }
+    loadJadval();
+    loadKal();
+  }
+
+  async function loadJadval() {
+    const box = document.getElementById('jadvalList');
+    let rows;
+    try { rows = await api.get('/api/schedule'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!rows.length) { box.innerHTML = '<div class="empty">Jadval hali tuzilmagan</div>'; return; }
+
+    const kunlar = {};
+    rows.forEach(x => (kunlar[x.weekday] = kunlar[x.weekday] || []).push(x));
+    box.innerHTML = `<div class="week">${Object.keys(kunlar).sort().map(w => `
+      <div class="wday">
+        <h4>${KUNLAR[w]}</h4>
+        ${kunlar[w].map(d => `
+          <div class="slot">
+            <span class="txt">
+              <b>${esc(d.start_time)}${d.end_time ? '–' + esc(d.end_time) : ''}</b>
+              <em>${esc(d.course_name || 'Umumiy dars')}${d.room ? ' · ' + esc(d.room) : ''}</em>
+            </span>
+            <button class="xbtn" onclick="jadvalOchir(${d.id})" title="O'chirish">×</button>
+          </div>`).join('')}
+      </div>`).join('')}</div>`;
+  }
+
+  async function jadvalQosh() {
+    const b = {
+      weekday: +document.getElementById('jKun').value,
+      start_time: document.getElementById('jBosh').value,
+      end_time: document.getElementById('jTugash').value || null,
+      course_id: +document.getElementById('jKurs').value || null,
+      room: document.getElementById('jXona').value.trim() || null
+    };
+    if (!b.start_time) return toast('Boshlanish vaqtini kiriting', false);
+    try { await api.post('/api/schedule', b); } catch (e) { return toast(e.message, false); }
+    toast('Jadvalga qo\'shildi');
+    document.getElementById('jXona').value = '';
+    loadJadval();
+  }
+
+  async function jadvalOchir(id) {
+    if (!confirm('Bu darsni jadvaldan o\'chirasizmi?')) return;
+    try { await api.del('/api/schedule/' + id); } catch (e) { return toast(e.message, false); }
+    toast('O\'chirildi'); loadJadval();
+  }
+
+  async function loadKal() {
+    const oy = document.getElementById('kalOy').value || new Date().toISOString().slice(0, 7);
+    const box = document.getElementById('kalBox');
+    let rows;
+    try { rows = await api.get('/api/events?period=' + oy); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    box.innerHTML = kalendarHTML(oy, rows, true);
+  }
+
+  async function hodisaQosh() {
+    const b = {
+      title: document.getElementById('hNom').value.trim(),
+      kind: document.getElementById('hTur').value,
+      day: document.getElementById('hSana').value,
+      end_day: document.getElementById('hOxir').value || null,
+      start_time: document.getElementById('hVaqt').value || null
+    };
+    if (!b.title) return toast('Sarlavha yozing', false);
+    if (!b.day) return toast('Sanani tanlang', false);
+    try { await api.post('/api/events', b); } catch (e) { return toast(e.message, false); }
+    toast('Kalendarga qo\'shildi');
+    document.getElementById('hNom').value = '';
+    document.getElementById('hOxir').value = '';
+    document.getElementById('kalOy').value = b.day.slice(0, 7);
+    loadKal();
+  }
+
+  async function hodisaOchir(id) {
+    if (!confirm('Bu hodisani o\'chirasizmi?')) return;
+    try { await api.del('/api/events/' + id); } catch (e) { return toast(e.message, false); }
+    toast('O\'chirildi'); loadKal();
+  }
+
+  // ==================== VAZIFA TEKSHIRISH ====================
+  let WORKS = [];
+
+  async function loadWorks() {
+    const box = document.getElementById('workList');
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    try { WORKS = await api.get('/api/works/pending'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const d = document.getElementById('workDot');
+    if (d) d.innerHTML = WORKS.length ? `<span class="dot">${WORKS.length}</span>` : '';
+
+    if (!WORKS.length) { box.innerHTML = '<div class="empty">Tekshirish kutayotgan vazifa yo\'q</div>'; return; }
+    box.innerHTML = `<div class="stack">${WORKS.map(w => `
+      <div class="item">
+        <div class="top">
+          <div>
+            <h4>${esc(w.student_name || 'Ismsiz')}</h4>
+            <div class="small muted">${esc(w.title)}${w.due_date ? ' · muddat ' + fmtDate(w.due_date) : ''}</div>
+            <div class="small muted">Topshirdi: ${fmtDate(w.submitted_at)}</div>
+          </div>
+        </div>
+        <div class="small" style="margin-top:10px; padding:11px 13px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; white-space:pre-wrap;">${esc(w.answer || '(faqat rasm)')}</div>
+        ${w.image ? `<a href="${w.image}" target="_blank" rel="noopener"><img src="${w.image}" alt="ish" style="max-width:260px;border-radius:10px;margin-top:10px;display:block;border:1px solid var(--border)" /></a>` : ''}
+        <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; align-items:center;">
+          <input class="input" id="wn-${w.id}" placeholder="Izoh (ixtiyoriy)" style="flex:1; min-width:180px;" />
+          <input class="input" id="ws-${w.id}" type="number" min="0" max="100" placeholder="Ball %" style="max-width:100px;" />
+          <button class="btn btn-success btn-sm" onclick="ishBaho(${w.id}, 'accepted')">Qabul qilish</button>
+          <button class="btn btn-ghost btn-sm" onclick="ishBaho(${w.id}, 'rework')">Qayta ishlash</button>
+        </div>
+      </div>`).join('')}</div>`;
+  }
+
+  async function ishBaho(id, status) {
+    const note = (document.getElementById('wn-' + id).value || '').trim();
+    const sc = (document.getElementById('ws-' + id).value || '').trim();
+    if (status === 'rework' && !note) return toast('Qayta ishlash uchun izoh yozing', false);
+    try {
+      await api.patch('/api/works/' + id, {
+        status, teacher_note: note || null,
+        score: sc === '' ? null : parseFloat(sc)
+      });
+    } catch (e) { return toast(e.message, false); }
+    toast(status === 'accepted' ? 'Qabul qilindi' : 'Qayta ishlashga qaytarildi');
+    loadWorks();
+  }
+
+  // ==================== PAROL TIKLASH SO'ROVLARI ====================
+  let RESETS = [];
+
+  async function loadResets() {
+    const box = document.getElementById('resetBox');
+    if (!box) return;
+    try { RESETS = await api.get('/api/auth/resets'); } catch (e) { return; }
+    const yangi = RESETS.filter(x => x.status === 'new');
+    if (!yangi.length) { box.innerHTML = ''; return; }
+
+    box.innerHTML = `
+      <div class="card" style="margin-bottom:16px; border-color: rgba(251,191,36,.45);">
+        <div class="section-title" style="margin-bottom:4px;">
+          <svg class="i i-lead" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Parol tiklash so'rovlari <span class="dot">${yangi.length}</span>
+        </div>
+        <p class="muted small" style="margin-bottom:14px;">Talaba parolini unutgan — yangi parol berib, unga yetkazing</p>
+        <div class="stack">${yangi.map((x, i) => `
+          <div class="item">
+            <div class="top">
+              <div>
+                <h4>${esc(x.full_name || 'Ismsiz')}</h4>
+                <div class="small muted">${esc(x.email)}${x.phone ? ' · ' + esc(x.phone) : ''}</div>
+                ${x.note ? `<div class="small muted">Izoh: ${esc(x.note)}</div>` : ''}
+                <div class="small muted">${fmtDate(x.created_at)}</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:11px; flex-wrap:wrap;">
+              <input class="input" id="rp-${x.id}" placeholder="Yangi parol" style="flex:1; min-width:160px;" />
+              <button class="btn btn-ghost btn-sm" onclick="parolYarat(${x.id})" title="Tasodifiy parol">
+                <svg class="i" viewBox="0 0 24 24"><path d="M21 2v6h-6M3 22v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L21 8M21 15a9 9 0 0 1-14.9 3.4L3 16"/></svg>
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="parolBer(${x.id})">Parol berish</button>
+              <button class="btn btn-ghost btn-sm" onclick="soravRad(${x.id})">Rad etish</button>
+            </div>
+          </div>`).join('')}</div>
+      </div>`;
+  }
+
+  function parolYarat(id) {
+    const c = 'abcdefghjkmnpqrstuvwxyz23456789';
+    let p = ''; for (let i = 0; i < 8; i++) p += c[Math.floor(Math.random() * c.length)];
+    document.getElementById('rp-' + id).value = p;
+  }
+
+  async function parolBer(id) {
+    const el = document.getElementById('rp-' + id);
+    const pass = (el.value || '').trim();
+    if (pass.length < 4) return toast('Parol kamida 4 belgi bo\'lsin', false);
+    const x = RESETS.find(r => r.id === id) || {};
+    try { await api.patch('/api/auth/resets/' + id, { password: pass }); }
+    catch (e) { return toast(e.message, false); }
+    alert(`✅ Yangi parol berildi!\n\nTalaba: ${x.full_name || ''}\nLogin: ${x.email || ''}\nYangi parol: ${pass}\n\nShu ma'lumotni talabaga yetkazing.`);
+    loadResets();
+  }
+
+  async function soravRad(id) {
+    if (!confirm('So\'rovni rad etasizmi? Parol o\'zgarmaydi.')) return;
+    try { await api.patch('/api/auth/resets/' + id, { action: 'reject' }); }
+    catch (e) { return toast(e.message, false); }
+    toast('Rad etildi'); loadResets();
+  }
+
+  // ==================== XABARLAR (chat) ====================
+  let THREADS = [], CHAT_SID = null, CHAT_LAST = 0, CHAT_TIMER = null;
+
+  const vaqt = t => { try { return new Date(t).toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
+  function kun(t) {
+    const d = new Date(t), b = new Date();
+    const teng = (a, c) => a.toDateString() === c.toDateString();
+    if (teng(d, b)) return 'Bugun';
+    const ken = new Date(b); ken.setDate(b.getDate() - 1);
+    if (teng(d, ken)) return 'Kecha';
+    return fmtDate(t);
+  }
+
+  async function loadThreads() {
+    const box = document.getElementById('threadList');
+    try { THREADS = await api.get('/api/messages/threads'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    if (!THREADS.length) { box.innerHTML = '<div class="empty">Talaba yo\'q</div>'; return; }
+    box.innerHTML = THREADS.map(t => `
+      <button class="thread ${CHAT_SID === t.student_id ? 'active' : ''}" onclick="ochSuhbat(${t.student_id})">
+        ${t.avatar
+          ? `<span class="avatar" style="width:38px;height:38px;background-image:url('${t.avatar}');background-size:cover;background-position:center;"></span>`
+          : `<span class="avatar" style="width:38px;height:38px;">${esc((t.full_name || '?').charAt(0).toUpperCase())}</span>`}
+        <span class="who">
+          <b>${esc(t.full_name || 'Ismsiz')}</b>
+          <span>${t.last_body ? (t.last_role === 'teacher' ? 'Siz: ' : '') + esc(t.last_body) : 'xabar yo\'q'}</span>
+        </span>
+        <span class="meta">
+          ${t.last_at ? `<div class="tm">${vaqt(t.last_at)}</div>` : ''}
+          ${t.unread ? `<span class="dot">${t.unread}</span>` : ''}
+        </span>
+      </button>`).join('');
+    belgiYangila();
+  }
+
+  async function ochSuhbat(sid) {
+    CHAT_SID = sid; CHAT_LAST = 0;
+    const t = THREADS.find(x => x.student_id === sid) || {};
+    document.getElementById('chatPane').innerHTML = `
+      <div class="chat-box">
+        <div class="chat-head">
+          ${t.avatar
+            ? `<span class="avatar" style="width:34px;height:34px;background-image:url('${t.avatar}');background-size:cover;background-position:center;"></span>`
+            : `<span class="avatar" style="width:34px;height:34px;">${esc((t.full_name || '?').charAt(0).toUpperCase())}</span>`}
+          <div><b>${esc(t.full_name || 'Talaba')}</b><div class="small">Talaba</div></div>
+        </div>
+        <div class="chat-msgs" id="chatMsgs"><div class="chat-empty">Yuklanmoqda…</div></div>
+        <form class="chat-form" onsubmit="return yubor(event)">
+          <textarea id="chatInput" placeholder="Javob yozing… (Enter — yuborish)" rows="1"></textarea>
+          <button class="btn btn-primary" type="submit" id="chatBtn">
+            <svg class="i" viewBox="0 0 24 24"><path d="M22 3L2 11l6 2.5L18 6l-7.5 9 8 3z"/></svg>
+          </button>
+        </form>
+      </div>`;
+
+    const el = document.getElementById('chatInput');
+    el.addEventListener('keydown', ev => { if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); yubor(ev); } });
+    el.addEventListener('input', () => { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; });
+
+    try { qoshMsgs(await api.get('/api/messages?student_id=' + sid), true); }
+    catch (e) { document.getElementById('chatMsgs').innerHTML = `<div class="chat-empty">Xato: ${esc(e.message)}</div>`; }
+    loadThreads();
+    if (CHAT_TIMER) clearInterval(CHAT_TIMER);
+    CHAT_TIMER = setInterval(chatYangi, 8000);
+  }
+
+  function qoshMsgs(list, tozala) {
+    const box = document.getElementById('chatMsgs');
+    if (!box) return;
+    if (tozala) { box.innerHTML = ''; box.dataset.kun = ''; CHAT_LAST = 0; }
+    if (!list.length && tozala) {
+      box.innerHTML = '<div class="chat-empty">Hali xabar yo\'q</div>';
+      return;
+    }
+    if (list.length && box.querySelector('.chat-empty')) box.innerHTML = '';
+    let oxirgiKun = box.dataset.kun || '', html = '';
+    for (const m of list) {
+      const k = kun(m.created_at);
+      if (k !== oxirgiKun) { html += `<div class="chat-day">${esc(k)}</div>`; oxirgiKun = k; }
+      html += `<div class="msg ${m.sender_role === 'teacher' ? 'me' : 'them'}">${esc(m.body)}<span class="t">${vaqt(m.created_at)}</span></div>`;
+      CHAT_LAST = Math.max(CHAT_LAST, m.id);
+    }
+    box.dataset.kun = oxirgiKun;
+    box.insertAdjacentHTML('beforeend', html);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  async function chatYangi() {
+    if (!CHAT_SID || !document.getElementById('tab-chat').classList.contains('active')) return;
+    try {
+      const yangi = await api.get('/api/messages?student_id=' + CHAT_SID + '&after=' + CHAT_LAST);
+      if (yangi.length) { qoshMsgs(yangi, false); loadThreads(); }
+    } catch (e) {}
+  }
+
+  async function yubor(e) {
+    e.preventDefault();
+    const el = document.getElementById('chatInput');
+    const matn = el.value.trim();
+    if (!matn || !CHAT_SID) return false;
+    const btn = document.getElementById('chatBtn');
+    btn.disabled = true; el.disabled = true;
+    try {
+      await api.post('/api/messages', { student_id: CHAT_SID, body: matn });
+      el.value = ''; el.style.height = 'auto';
+      qoshMsgs(await api.get('/api/messages?student_id=' + CHAT_SID + '&after=' + CHAT_LAST), false);
+      loadThreads();
+    } catch (err) { toast(err.message, false); }
+    btn.disabled = false; el.disabled = false; el.focus();
+    return false;
+  }
+
+  async function belgiYangila() {
+    const d = document.getElementById('chatDot');
+    if (!d) return;
+    try {
+      const x = await api.get('/api/messages/unread');
+      d.innerHTML = x.unread ? `<span class="dot">${x.unread}</span>` : '';
+    } catch (e) {}
+  }
+
+  // ==================== SERTIFIKATLAR ====================
+  let CERT_ROWS = [];
+
+  async function loadCertPending() {
+    const box = document.getElementById('certPending');
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    try { CERT_ROWS = await api.get('/api/certificates/pending'); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    if (!CERT_ROWS.length) {
+      box.innerHTML = '<div class="empty">Sertifikat kutayotgan talaba yo\'q</div>';
+      return;
+    }
+    const tayyor = CERT_ROWS.filter(x => Number(x.qolgan_kun) <= 0);
+    const kutmoqda = CERT_ROWS.filter(x => Number(x.qolgan_kun) > 0);
+
+    const qator = (x, i) => {
+      const t = Number(x.qolgan_kun) <= 0;
+      return `<div class="item">
+        <div class="top">
+          <div>
+            <h4>${esc(x.full_name || 'Ismsiz')}</h4>
+            <div class="small muted">${esc(x.course_title)} · ${esc(x.phone || '')}</div>
+            <div class="small muted">Tugaydi: ${fmtDate(x.tugaydi)} · Mashq: ${x.bajarilgan}${x.bajarilgan ? ' (aniqlik ' + x.aniqlik + '%)' : ''}</div>
+          </div>
+          ${t ? '<span class="pay-pill paid">Muddat tugadi</span>'
+              : `<div class="days-left">${x.qolgan_kun}<small>kun qoldi</small></div>`}
+        </div>
+        <div style="display:flex; gap:8px; margin-top:11px; flex-wrap:wrap;">
+          <input class="input" id="cn-${i}" placeholder="Sertifikat raqami, masalan SMA-2026-001" style="flex:1; min-width:190px;" />
+          <input class="input" id="cs-${i}" type="number" min="0" max="100" placeholder="Natija %" style="max-width:110px;"
+                 value="${x.bajarilgan ? x.aniqlik : ''}" />
+          <button class="btn btn-primary btn-sm" onclick="berCert(${i})">Sertifikat berish</button>
+        </div>
+      </div>`;
+    };
+
+    box.innerHTML = `
+      ${tayyor.length ? `<div class="section-title" style="font-size:15px; margin-bottom:10px;">Muddati tugagan (${tayyor.length})</div>
+        <div class="stack">${tayyor.map((x) => qator(x, CERT_ROWS.indexOf(x))).join('')}</div>` : ''}
+      ${kutmoqda.length ? `<div class="section-title" style="font-size:15px; margin:${tayyor.length ? '22px' : '0'} 0 10px;">Davom etmoqda (${kutmoqda.length})</div>
+        <div class="stack">${kutmoqda.map((x) => qator(x, CERT_ROWS.indexOf(x))).join('')}</div>` : ''}`;
+  }
+
+  async function berCert(i) {
+    const x = CERT_ROWS[i];
+    const number = (document.getElementById('cn-' + i).value || '').trim();
+    const scoreRaw = (document.getElementById('cs-' + i).value || '').trim();
+    if (!number) return toast('Sertifikat raqamini yozing', false);
+    if (!confirm(`${x.full_name}\n${x.course_title}\n\nSertifikat raqami: ${number}\n\nTasdiqlaysizmi?`)) return;
+    try {
+      await api.post('/api/certificates', {
+        student_id: x.student_id, course_id: x.course_id, number,
+        score: scoreRaw === '' ? null : parseFloat(scoreRaw)
+      });
+    } catch (e) { return toast(e.message, false); }
+    toast('Sertifikat berildi: ' + number);
+    loadCertPending();
+  }
+
+  // ==================== TO'LOVLAR ====================
+  async function loadPayMonth() {
+    const box = document.getElementById('payList');
+    const period = document.getElementById('payMonth').value || thisMonth();
+    box.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
+    let d;
+    try { d = await api.get('/api/payments/month?period=' + period); }
+    catch (e) { box.innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+
+    const paid = d.rows.filter(x => x.status === 'paid').length;
+    const sum = d.rows.reduce((s, x) => s + (x.status === 'paid' ? Number(x.amount || 0) : 0), 0);
+
+    box.innerHTML = `
+      <div class="stats" style="margin-bottom:16px;">
+        <div class="stat-card good"><div class="lab">To'lagan</div><div class="val">${paid}</div></div>
+        <div class="stat-card ${d.rows.length - paid ? 'bad' : 'good'}"><div class="lab">To'lamagan</div><div class="val">${d.rows.length - paid}</div></div>
+        <div class="stat-card accent"><div class="lab">Yig'ilgan</div><div class="val" style="font-size:22px;">${money(sum)}</div></div>
+      </div>
+      <div class="stack">${d.rows.map(s => `
+        <div class="item"><div class="top">
+          <div>
+            <b>${esc(s.full_name || 'Ismsiz')}</b>
+            <div class="small muted">${esc(s.phone || '—')}${s.paid_at ? ' · ' + fmtDate(s.paid_at) : ''}${s.method ? ' · ' + esc(s.method) : ''}</div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="pay-pill ${s.status}">${PAY_UZ[s.status]}</span>
+            <div class="seg">
+              <button class="${s.status === 'paid' ? 'on' : ''}" onclick="setPay(${s.student_id},'paid')">To'ladi</button>
+              <button class="${s.status === 'partial' ? 'on' : ''}" onclick="setPay(${s.student_id},'partial')">Qisman</button>
+              <button class="${s.status === 'unpaid' ? 'on' : ''}" onclick="setPay(${s.student_id},'unpaid')">Yo'q</button>
+            </div>
+          </div>
+        </div></div>`).join('')}</div>`;
+  }
+
+  async function setPay(studentId, status) {
+    const period = document.getElementById('payMonth').value || thisMonth();
+    let amount = 0, method = null;
+    if (status === 'paid' || status === 'partial') {
+      const v = prompt('To\'langan summa (so\'m):', status === 'paid' ? '250000' : '');
+      if (v === null) return;
+      amount = parseFloat(String(v).replace(/\s/g, '')) || 0;
+      method = prompt('To\'lov usuli (naqd / karta / o\'tkazma):', 'naqd') || null;
+    }
+    try { await api.post('/api/payments', { student_id: studentId, period, status, amount, method }); }
+    catch (e) { return toast(e.message, false); }
+    toast(PAY_UZ[status] + ' — saqlandi');
+    loadPayMonth();
+  }
+
+  // ---------------- PROFIL ----------------
+  let NEW_AVATAR = undefined; // undefined = o'zgarmagan, null = o'chirilgan, string = yangi rasm
+
+  function renderProfile() {
+    document.getElementById('pf_name').value = ME.full_name || '';
+    document.getElementById('pf_phone').value = ME.phone || '';
+    document.getElementById('pf_email').value = ME.email || '';
+    paintAvatar(ME.avatar);
+  }
+
+  function paintAvatar(src) {
+    const el = document.getElementById('avatarPreview');
+    if (src) {
+      el.style.backgroundImage = `url('${src}')`;
+      el.textContent = '';
+      document.getElementById('avatarDelBtn').style.display = '';
+    } else {
+      el.style.backgroundImage = '';
+      el.textContent = (ME.full_name || '?').trim().charAt(0).toUpperCase();
+      document.getElementById('avatarDelBtn').style.display = 'none';
+    }
+    const h = document.getElementById('headerAvatar');
+    if (h) {
+      if (src) { h.style.backgroundImage = `url('${src}')`; h.textContent = ''; }
+      else { h.style.backgroundImage = ''; h.textContent = (ME.full_name || '?').trim().charAt(0).toUpperCase(); }
+    }
+  }
+
+  async function pickAvatar(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      NEW_AVATAR = await resizeImageToDataURL(file, 256);
+      paintAvatar(NEW_AVATAR);
+      toast("Rasm tanlandi — saqlashni unutmang");
+    } catch (err) { toast(err.message, false); }
+    e.target.value = '';
+  }
+
+  function removeAvatar() {
+    NEW_AVATAR = null;
+    paintAvatar(null);
+    toast("Rasm o'chirildi — saqlashni unutmang");
+  }
+
+  async function saveProfile(e) {
+    e.preventDefault();
+    const pass = document.getElementById('pf_pass').value;
+    const pass2 = document.getElementById('pf_pass2').value;
+    if (pass && pass !== pass2) { toast('Parollar mos kelmadi', false); return false; }
+    const btn = document.getElementById('pf_btn');
+    btn.disabled = true; btn.textContent = 'Saqlanmoqda…';
+    const payload = {
+      full_name: document.getElementById('pf_name').value.trim(),
+      phone: document.getElementById('pf_phone').value.trim(),
+      email: document.getElementById('pf_email').value.trim()
+    };
+    if (NEW_AVATAR !== undefined) payload.avatar = NEW_AVATAR;
+    if (pass) payload.password = pass;
+    try {
+      const d = await api.patch('/api/profile', payload);
+      ME = d.user;
+      NEW_AVATAR = undefined;
+      document.getElementById('pf_pass').value = '';
+      document.getElementById('pf_pass2').value = '';
+      document.getElementById('whoami').textContent = ME.full_name || "O'qituvchi";
+      paintAvatar(ME.avatar);
+      toast('Profil saqlandi ✓');
+    } catch (err) { toast(err.message, false); }
+    btn.disabled = false; btn.textContent = 'Saqlash';
+    return false;
+  }
+
+  // ---------------- ARIZALAR ----------------
+  async function loadApps() {
+    const body = document.getElementById('appsBody');
+    let data;
+    try { data = await api.get('/api/applications'); }
+    catch (e) { body.innerHTML = `<tr><td colspan="7" class="empty">Xato: ${esc(e.message)}</td></tr>`; return; }
+    APPS = data;
+    const newCount = data.filter(a => a.status === 'new').length;
+    document.getElementById('appsCount').textContent = newCount ? `(${newCount})` : '';
+    if (!data.length) { body.innerHTML = `<tr><td colspan="7" class="empty">Hozircha ariza yo'q</td></tr>`; return; }
+    body.innerHTML = data.map(a => `
+      <tr>
+        <td class="small muted">${fmtDate(a.created_at)}</td>
+        <td><b>${esc(a.full_name)}</b>${a.parent_name ? `<br><span class="small muted">Ota-ona: ${esc(a.parent_name)}</span>` : ''}</td>
+        <td><a href="tel:${esc(a.phone)}">${esc(a.phone)}</a></td>
+        <td>${esc(a.grade || '—')}</td>
+        <td class="small">${esc(a.message || '—')}</td>
+        <td><span class="badge ${a.status}">${a.status === 'new' ? 'Yangi' : a.status === 'accepted' ? 'Qabul' : 'Rad'}</span></td>
+        <td style="white-space:nowrap;">
+          ${a.status !== 'accepted' ? `<button class="btn btn-success btn-sm" onclick="openAccept(${a.id})"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Qabul + login</button>` : ''}
+          ${a.status !== 'rejected' ? `<button class="btn btn-ghost btn-sm" onclick="setAppStatus('${a.id}','rejected')">Rad</button>` : ''}
+          <button class="btn btn-ghost btn-sm" onclick="delApp('${a.id}')" title="O'chirish"><svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button>
+        </td>
+      </tr>`).join('');
+  }
+
+  async function setAppStatus(id, status) {
+    try { await api.patch('/api/applications/' + id, { status }); }
+    catch (e) { return toast(e.message, false); }
+    toast(status === 'accepted' ? 'Ariza qabul qilindi' : 'Ariza rad etildi');
+    loadApps();
+  }
+  async function delApp(id) {
+    if (!confirm('Arizani o\'chirasizmi?')) return;
+    try { await api.del('/api/applications/' + id); }
+    catch (e) { return toast(e.message, false); }
+    toast('O\'chirildi'); loadApps();
+  }
+
+  // ---------------- TALABALAR ----------------
+  async function loadStudents() {
+    let data;
+    try { data = await api.get('/api/students'); }
+    catch (e) { document.getElementById('peopleList').innerHTML = `<div class="empty">Xato: ${esc(e.message)}</div>`; return; }
+    STUDENTS = data;
+    document.getElementById('studCount').textContent = data.length ? `(${data.length})` : '';
+    renderPeople();
+  }
+
+  function renderPeople() {
+    const q = (document.getElementById('studSearch').value || '').toLowerCase();
+    const list = STUDENTS.filter(s => (s.full_name || '').toLowerCase().includes(q) || (s.phone || '').includes(q));
+    const el = document.getElementById('peopleList');
+    if (!list.length) { el.innerHTML = `<div class="empty">Talaba topilmadi</div>`; return; }
+    el.innerHTML = list.map(s => `
+      <button class="person ${SELECTED && SELECTED.id === s.id ? 'active' : ''}" onclick="selectStudent('${s.id}')">
+        ${avatarHTML(s)}
+        <span><b>${esc(s.full_name || 'Ismsiz')}</b><br><span>${esc(s.phone || '—')}</span></span>
+      </button>`).join('');
+  }
+
+  async function selectStudent(id) {
+    id = Number(id);
+    SELECTED = STUDENTS.find(s => s.id === id);
+    renderPeople();
+    try {
+      const [g, f, a, en] = await Promise.all([
+        api.get('/api/grades?student_id=' + id),
+        api.get('/api/feedback?student_id=' + id),
+        api.get('/api/assignments?student_id=' + id),
+        api.get('/api/enrollments?student_id=' + id)
+      ]);
+      renderDetail(g || [], f || [], a || [], en || []);
+    } catch (e) { toast(e.message, false); }
+  }
+
+  // Talaba akkauntini butunlay o'chirish. Ikki bosqichli tasdiq —
+  // baholari, davomati, to'lovlari ham birga ketadi, qaytarib bo'lmaydi.
+  async function talabaOchir(id) {
+    const s = STUDENTS.find(x => x.id === id);
+    const ism = (s && s.full_name) || 'talaba';
+    if (!confirm(`"${ism}" akkaunti o'chiriladi.\n\nUning baholari, davomati, to'lovlari, vazifalari va sertifikatlari ham birga o'chadi. Buni qaytarib bo'lmaydi.`)) return;
+    if (prompt(`Tasdiqlash uchun O'CHIR deb yozing:`) !== "O'CHIR") return toast('Bekor qilindi', false);
+    try { await api.del('/api/students/' + id); } catch (e) { return toast(e.message, false); }
+    toast(ism + ' o\'chirildi');
+    SELECTED = null;
+    document.getElementById('studentDetail').innerHTML =
+      '<div class="card"><div class="empty">Talabani tanlang</div></div>';
+    loadStudents();
+  }
+
+  // Talabani bosh sahifadagi "eng yaxshilar" ro'yxatidan yashirish / qaytarish
+  async function landingKorsat(id, korsat) {
+    try { await api.patch('/api/students/' + id + '/landing', { landing_ok: korsat }); }
+    catch (e) { return toast(e.message, false); }
+    toast(korsat ? 'Endi saytda ko\'rinishi mumkin' : 'Saytdan yashirildi');
+    const s = STUDENTS.find(x => x.id === id);
+    if (s) s.landing_ok = korsat;
+    selectStudent(id);
+  }
+
+  function gradeClass(score, max) { const p = (score / max) * 100; return p >= 80 ? 'good' : p >= 60 ? 'mid' : 'low'; }
+
+  function renderDetail(grades, feedback, assignments, enrollments) {
+    const s = SELECTED;
+    enrollments = enrollments || [];
+    const enrolledIds = enrollments.map(e => e.course_id);
+    const available = COURSES.filter(c => !enrolledIds.includes(c.id));
+    const coursesCard = `
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;">
+          <svg class="i i-lead" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Kurslari
+        </div>
+        ${available.length ? `
+        <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
+          <select class="select" id="enrollSel" style="flex:1">
+            ${available.map(c => `<option value="${c.id}">${esc(c.title)}</option>`).join('')}
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="addEnroll()">+ Biriktirish</button>
+        </div>` : ''}
+        <div class="stack">${enrollments.length ? enrollments.map(en => `
+          <div class="item"><div class="top">
+            <div><h4>${esc(en.title)}</h4><div class="small muted">${esc(en.duration || '')}</div></div>
+            <button class="btn btn-ghost btn-sm" onclick="delEnroll(${en.id})" title="Olib tashlash">
+              <svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div></div>`).join('') : '<div class="empty">Hech qanday kursga biriktirilmagan</div>'}</div>
+      </div>`;
+    document.getElementById('studentDetail').innerHTML = `
+      <div class="card">
+        <div class="spread">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            ${s.avatar
+              ? `<span class="avatar" style="width:48px;height:48px;background-image:url('${s.avatar}');background-size:cover;background-position:center;"></span>`
+              : `<span class="avatar" style="width:48px;height:48px;font-size:20px;">${esc((s.full_name || '?').charAt(0).toUpperCase())}</span>`}
+            <div><div class="section-title" style="margin:0;">${esc(s.full_name || 'Ismsiz')}</div><div class="small muted">${esc(s.phone || '—')}</div></div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-ghost btn-sm" onclick="landingKorsat(${s.id}, ${s.landing_ok === false})"
+                    title="Bosh sahifadagi 'Eng yaxshi o'quvchilar' ro'yxati">
+              ${s.landing_ok === false ? "Saytda ko'rsatish" : 'Saytdan yashirish'}
+            </button>
+            <button class="btn btn-ghost btn-sm" onclick="talabaOchir(${s.id})" title="Akkauntni o'chirish">
+              <svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+        </div>
+        ${s.landing_ok === false
+          ? '<p class="small muted" style="margin-top:10px;">Bu talaba bosh sahifadagi eng yaxshilar ro\'yxatida ko\'rinmaydi.</p>'
+          : ''}
+      </div>
+
+      ${coursesCard}
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;"><svg class="i i-lead" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v2M12 10v7M17 6v11"/></svg>Baholar</div>
+        <form class="row2" onsubmit="return addGrade(event)" style="align-items:end; margin-bottom:14px;">
+          <div class="field" style="margin:0;"><label>Mavzu</label><input class="input" id="g_topic" required placeholder="Masalan: Algebra — tenglamalar" /></div>
+          <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:end;">
+            <div class="field" style="margin:0;"><label>Ball</label><input class="input" id="g_score" type="number" step="0.1" required placeholder="85" /></div>
+            <div class="field" style="margin:0;"><label>Maks</label><input class="input" id="g_max" type="number" step="0.1" value="100" /></div>
+            <button class="btn btn-primary" type="submit">+ Qo'shish</button>
+          </div>
+        </form>
+        <div class="stack" id="gradesList">${grades.length ? grades.map(gr => `
+          <div class="item"><div class="top">
+            <div><h4>${esc(gr.topic)}</h4>${gr.note ? `<div class="small muted">${esc(gr.note)}</div>` : ''}<div class="small muted">${fmtDate(gr.created_at)}</div></div>
+            <div style="display:flex;align-items:center;gap:8px; flex-wrap:wrap;"><span class="grade-pill ${gradeClass(gr.score, gr.max_score)}">${gr.score}/${gr.max_score}</span>
+            <button class="btn btn-ghost btn-sm" onclick="delRow('grades','${gr.id}')"><svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button></div>
+          </div></div>`).join('') : '<div class="empty">Baho yo\'q</div>'}</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;"><svg class="i i-lead" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Feedback</div>
+        <form onsubmit="return addFeedback(event)" style="margin-bottom:14px;">
+          <div class="field" style="margin-bottom:10px;"><textarea class="textarea" id="fb_msg" required placeholder="Talabaga izoh / tavsiya…"></textarea></div>
+          <button class="btn btn-primary" type="submit">+ Yuborish</button>
+        </form>
+        <div class="stack" id="fbList">${feedback.length ? feedback.map(fb => `
+          <div class="item"><div class="top"><div>${esc(fb.message)}<div class="small muted">${fmtDate(fb.created_at)}</div></div>
+          <button class="btn btn-ghost btn-sm" onclick="delRow('feedback','${fb.id}')"><svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button></div></div>`).join('') : '<div class="empty">Feedback yo\'q</div>'}</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;"><svg class="i i-lead" viewBox="0 0 24 24"><path d="M9 3h6a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M9 13l2 2 4-4"/></svg>Vazifalar</div>
+        <form onsubmit="return addAssignment(event)" style="margin-bottom:14px;">
+          <div class="field" style="margin-bottom:10px;"><input class="input" id="as_title" required placeholder="Vazifa nomi" /></div>
+          <div class="field" style="margin-bottom:10px;"><textarea class="textarea" id="as_desc" placeholder="Tavsif (ixtiyoriy)"></textarea></div>
+          <div class="spread">
+            <div class="field" style="margin:0;"><label>Muddat</label><input class="input" id="as_due" type="date" style="max-width:200px;" /></div>
+            <button class="btn btn-primary" type="submit" style="align-self:end;">+ Vazifa berish</button>
+          </div>
+        </form>
+        <div class="stack" id="asList">${assignments.length ? assignments.map(as => `
+          <div class="item"><div class="top">
+            <div><h4>${esc(as.title)}</h4>${as.description ? `<div class="small muted">${esc(as.description)}</div>` : ''}
+            <div class="small muted">${as.due_date ? 'Muddat: ' + fmtDate(as.due_date) : ''} ${as.done ? '· <span style="color:var(--success)">✓ Bajarilgan</span>' : ''}</div></div>
+            <button class="btn btn-ghost btn-sm" onclick="delRow('assignments','${as.id}')"><svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          </div></div>`).join('') : '<div class="empty">Vazifa yo\'q</div>'}</div>
+      </div>`;
+  }
+
+  async function addEnroll() {
+    const sel = document.getElementById('enrollSel');
+    if (!sel) return;
+    try { await api.post('/api/enrollments', { student_id: SELECTED.id, course_id: parseInt(sel.value, 10) }); }
+    catch (err) { return toast(err.message, false); }
+    toast('Kursga biriktirildi'); selectStudent(SELECTED.id);
+  }
+  async function delEnroll(id) {
+    if (!confirm('Kursdan olib tashlaysizmi?')) return;
+    try { await api.del('/api/enrollments/' + id); }
+    catch (err) { return toast(err.message, false); }
+    toast('Olib tashlandi'); selectStudent(SELECTED.id);
+  }
+
+  async function addGrade(e) {
+    e.preventDefault();
+    try {
+      await api.post('/api/grades', {
+        student_id: SELECTED.id,
+        topic: document.getElementById('g_topic').value.trim(),
+        score: parseFloat(document.getElementById('g_score').value),
+        max_score: parseFloat(document.getElementById('g_max').value || '100')
+      });
+    } catch (err) { return toast(err.message, false); }
+    toast('Baho qo\'shildi'); selectStudent(SELECTED.id); return false;
+  }
+  async function addFeedback(e) {
+    e.preventDefault();
+    try {
+      await api.post('/api/feedback', { student_id: SELECTED.id, message: document.getElementById('fb_msg').value.trim() });
+    } catch (err) { return toast(err.message, false); }
+    toast('Feedback yuborildi'); selectStudent(SELECTED.id); return false;
+  }
+  async function addAssignment(e) {
+    e.preventDefault();
+    try {
+      await api.post('/api/assignments', {
+        student_id: SELECTED.id,
+        title: document.getElementById('as_title').value.trim(),
+        description: document.getElementById('as_desc').value.trim() || null,
+        due_date: document.getElementById('as_due').value || null
+      });
+    } catch (err) { return toast(err.message, false); }
+    toast('Vazifa berildi'); selectStudent(SELECTED.id); return false;
+  }
+  async function delRow(table, id) {
+    if (!confirm('O\'chirasizmi?')) return;
+    try { await api.del('/api/' + table + '/' + id); }
+    catch (err) { return toast(err.message, false); }
+    toast('O\'chirildi'); selectStudent(SELECTED.id);
+  }
+</script>
+</body>
+</html>
